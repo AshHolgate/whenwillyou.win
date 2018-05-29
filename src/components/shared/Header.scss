@@ -1,3 +1,5 @@
+@import "../../Animations.scss";
+
 .header {
 	width: 100%;
 	background: white;
@@ -6,8 +8,11 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
+	align-items: center;
+	z-index: 10;
 	&__title-container {
 		cursor: pointer;
+		height: 100%;
 		margin-left: 20px;
 		background: black;
 		display: flex;
@@ -31,7 +36,7 @@
 		font-size: 1.6em;
 		position: relative;
 		opacity: 0;
-		animation-name: logoLoadInFade;
+		animation-name: fadeInScale;
 		animation-duration: 1s;
 		animation-fill-mode: forwards;
 	}
@@ -50,9 +55,4 @@
 	&__5 {
 		animation-delay: 0.7s;
 	}
-}
-
-@keyframes logoLoadInFade {
-    from {opacity: 0; transform: scale(0.5)}
-    to {opacity: 1; transform: scale(1)}
 }

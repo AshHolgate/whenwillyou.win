@@ -1,12 +1,16 @@
 import * as React from "react";
-import "./App.css";
+import "./App.scss";
 import Header from "./components/shared/Header";
+import Footer from "./components/shared/Footer";
+import MainRoute from "./components/MainRoute";
 
 class App extends React.Component {
 	public render() {
 		return (
-			<div className="App">
+			<div className="app">
 				<Header />
+				<MainRoute />
+				<Footer />
 			</div>
 		);
 	}
