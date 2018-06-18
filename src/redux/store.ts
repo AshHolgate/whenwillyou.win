@@ -4,6 +4,7 @@ export interface WhenWillYouWinStore {
 }
 
 const reducers = combineReducers<WhenWillYouWinStore>({
+	
 });
 
 const store = createStore<WhenWillYouWinStore, any, any, any>(

@@ -1,0 +1,72 @@
+@import "../../brand.scss";
+
+.lotto-simulation-option {
+	padding: 5px 10px;
+	background: #DDDDDD;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	border-radius: 10px;
+	transition: 0.5s;
+	height: 51px;
+	margin: 5px 0;
+	overflow: hidden;
+	position: relative;
+	&--active {
+		background: red;
+		height: 200px;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+	}
+	&__title {
+		font-size: 1.6em;
+		font-weight: 700;
+		margin: 10px 0;
+		text-transform: uppercase;
+		transition: 0.5s;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		user-select: none;
+		&--active {
+			color: white;
+			left: 0%;
+			margin: 0;
+			transform: translateX(9px);
+		}
+	}
+	&__sub-title-container {
+		margin: 40px 0 10px;
+		width: 100%;
+		transition: 0.5s;
+		opacity: 0;
+		display: flex;
+		justify-content: space-between;
+		&--active {
+			opacity: 1;
+			margin: 30px 0 10px;
+		}
+	}
+	&__sub-title {
+		margin: 0;
+		font-weight: 700;
+		color: white;
+		user-select: none;
+	}
+	&__lucky-dip-button {
+		font-family: $MainFont;
+		cursor: pointer;
+		font-size: 0.8em;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0 10px;
+		border-radius: 10px;
+		margin: 0;
+		font-weight: 700;
+		color: red;
+		background: rgba(255,255,255,0.75);
+		outline: none;
+		border: none;
+		user-select: none;
+	}
+}
