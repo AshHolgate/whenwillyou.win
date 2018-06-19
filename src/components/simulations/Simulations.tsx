@@ -9,18 +9,18 @@ export interface SimulationsStoreProps {
 }
 
 export interface SimulationsDispatchProps {
-	onLottoSelectedNumberChange: (newNumbers: (number|null)[]) => void;
+	onLottoSelectedNumbersChange: (newNumbers: (number|null)[]) => void;
 }
 
 export type SimulationsProps = SimulationsStoreProps & SimulationsDispatchProps;
 
 export default class Simulations extends React.Component<SimulationsProps> {
 	render() {
-		let { lottoSimulation, onLottoSelectedNumberChange } = this.props;
+		let { lottoSimulation, onLottoSelectedNumbersChange } = this.props;
 		return(
 			<div className="simulations">
 				<Divider title="Simulations" />
-				<LottoSimulation simulation={lottoSimulation} onSelectedNumberChange={(newNumbers: (number|null)[]) => onLottoSelectedNumberChange(newNumbers)}/>/>
+				<LottoSimulation simulation={lottoSimulation} onSelectedNumbersChange={(newNumbers: (number|null)[]) => onLottoSelectedNumbersChange(newNumbers)}/>
 			</div>
 		);
 	}
