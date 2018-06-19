@@ -3,9 +3,15 @@ import LottoNumberOption from "./LottoNumberOption";
 import SimulationData from "../../models/Simulation";
 require("./LottoSimulation.scss");
 
-export interface LottoSimulationProps {
+export interface LottoSimulationDataProps {
 	simulation: SimulationData;
 }
+
+export interface LottoSimulationDispatchProps {
+	onSelectedNumbersChange: (newNumbers: (number|null)[]) => void;
+}
+
+export type LottoSimulationProps = LottoSimulationDataProps & LottoSimulationDispatchProps;
 
 export interface LottoSimulationState {
 	isOpen: boolean;
@@ -31,6 +37,12 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		console.log(this);
 	}
 
+	handleSelectedNumberChange(value: number, index: number) {
+		let newNumbers = this.props.simulation.numbersChosen.slice();
+		newNumbers[index] = value;
+		this.props.onSelectedNumbersChange(newNumbers);
+	}
+
 	render() {
 		let { simulation } = this.props;
 		let { isOpen } = this.state;
@@ -43,7 +55,8 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 				</div>
 				<div className={`lotto-simulation__numbers-container ${isOpen ? "lotto-simulation__numbers-container--active" : ""}`}>
 					{simulation.numbersChosen.map((key, index) => {
-						return <LottoNumberOption key={index} value={simulation.numbersChosen[index]} />;
+						return <LottoNumberOption key={index} value={simulation.numbersChosen[index]} index={index}
+							onChange={(value, index) => this.handleSelectedNumberChange(value, index)}/>;
 					})}
 
 				</div>
