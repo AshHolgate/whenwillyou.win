@@ -10,14 +10,13 @@ export interface LottoNumberOptionState {
 }
 
 export default class LottoNumberOption extends React.Component<LottoNumberOptionProps, LottoNumberOptionState> {
-	handleLuckyDipClick(e: React.MouseEvent<HTMLElement>) {
+	handleClick(e: React.MouseEvent<HTMLElement>) {
 		e.stopPropagation();
-		console.log(this);
 	}
 
 	render() {
 		return (
-			<input className="lotto-number-option" onClick={(e) => this.handleLuckyDipClick(e)} />
+			<input className="lotto-number-option" onClick={(e) => this.handleClick(e)} />
 		);
 	}
 }

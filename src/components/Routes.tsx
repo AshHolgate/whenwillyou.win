@@ -1,5 +1,6 @@
 import * as React from "react";
-import Simulations from "./simulations/Simulations";
+import { Route, Redirect, Switch } from "react-router-dom";
+import simulationsContainer from "../containers/simulationsContainer";
 require("./Routes.scss");
 
 export interface RoutesProps {
@@ -11,7 +12,10 @@ export default class Routes extends React.Component<RoutesProps> {
 		let { } = this.props;
 		return (
 			<div className="routes">
-				<Simulations />
+				<Switch>
+					<Route path="/" component={simulationsContainer} />
+					<Redirect to="/" />
+				</Switch>
 			</div>
 		);
 	}
