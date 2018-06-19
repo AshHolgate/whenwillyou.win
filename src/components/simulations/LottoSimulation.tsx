@@ -1,9 +1,10 @@
 import * as React from "react";
 import LottoNumberOption from "./LottoNumberOption";
+import SimulationData from "../../models/Simulation";
 require("./LottoSimulation.scss");
 
 export interface LottoSimulationProps {
-
+	simulation: SimulationData;
 }
 
 export interface LottoSimulationState {
@@ -31,6 +32,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	render() {
+		let { simulation } = this.props;
 		let { isOpen } = this.state;
 		return (
 			<div className={`lotto-simulation ${isOpen ? "lotto-simulation--active" : ""}`} onClick={() => this.handleOpenClick()}>
@@ -40,12 +42,10 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 					<button className={`lotto-simulation__lucky-dip-button`} onClick={(e) => this.handleLuckyDipClick(e)}>Lucky Dip</button>
 				</div>
 				<div className={`lotto-simulation__numbers-container ${isOpen ? "lotto-simulation__numbers-container--active" : ""}`}>
-					<LottoNumberOption />
-					<LottoNumberOption />
-					<LottoNumberOption />
-					<LottoNumberOption />
-					<LottoNumberOption />
-					<LottoNumberOption />
+					{simulation.numbersChosen.map((key, index) => {
+						return <LottoNumberOption key={index} value={simulation.numbersChosen[index]} />;
+					})}
+
 				</div>
 			</div>
 		);

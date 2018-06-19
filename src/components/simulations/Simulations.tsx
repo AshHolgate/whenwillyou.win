@@ -1,25 +1,26 @@
 import * as React from "react";
 import Divider from "../shared/Divider";
-import LottoSimulationOption from "./LottoSimulation";
+import LottoSimulation from "./LottoSimulation";
+import SimulationData from "../../models/Simulation";
 require("./Simulations.scss");
 
-export interface SimulationsDataProps {
-
+export interface SimulationsStoreProps {
+	lottoSimulation: SimulationData;
 }
 
 export interface SimulationsDispatchProps {
 
 }
 
-export type SimulationsProps = SimulationsDataProps & SimulationsDispatchProps;
+export type SimulationsProps = SimulationsStoreProps & SimulationsDispatchProps;
 
 export default class Simulations extends React.Component<SimulationsProps> {
 	render() {
+		let { lottoSimulation } = this.props;
 		return(
 			<div className="simulations">
 				<Divider title="Simulations" />
-				<LottoSimulationOption />
-				<LottoSimulationOption />
+				<LottoSimulation simulation={lottoSimulation}/>
 			</div>
 		);
 	}
