@@ -12,7 +12,7 @@ export default class Footer extends React.Component<FooterProps> {
 			<div className="footer">
 				<div className="footer__text-container">
 					<p className="footer__text">designed and developed by</p>
-					<p className="footer__text footer__text--name">Ashton Holgate</p>
+					<a className="footer__text footer__text--name" href="http://www.ashtonholgate.com">Ashton Holgate</a>
 				</div>
 			</div>
 		);

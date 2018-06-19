@@ -1,6 +1,6 @@
 @import "../../brand.scss";
 
-.lotto-simulation-option {
+.lotto-simulation {
 	padding: 5px 10px;
 	background: #DDDDDD;
 	display: flex;
@@ -35,7 +35,8 @@
 		}
 	}
 	&__sub-title-container {
-		margin: 40px 0 10px;
+		min-height: 19px;
+		margin: 40px 0 5px;
 		width: 100%;
 		transition: 0.5s;
 		opacity: 0;
@@ -43,7 +44,7 @@
 		justify-content: space-between;
 		&--active {
 			opacity: 1;
-			margin: 30px 0 10px;
+			margin: 30px 0 5px;
 		}
 	}
 	&__sub-title {
@@ -68,5 +69,20 @@
 		outline: none;
 		border: none;
 		user-select: none;
+		&:focus {
+			background: white;
+		}
+	}
+	&__numbers-container {
+		min-height: 52px;
+		width: 100%;
+		transition: 0.5s;
+		opacity: 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		&--active {
+			opacity: 1;
+		}
 	}
 }

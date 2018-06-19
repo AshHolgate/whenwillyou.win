@@ -1,6 +1,6 @@
 import { WhenWillYouWinStore } from "../redux/store";
 import { Dispatch, connect } from "react-redux";
-import Header from "../components/shared/Header";
+import Simulations from "../components/simulations/Simulations";
 
 const mapStateToProps = (store: WhenWillYouWinStore) => ({
 
@@ -10,4 +10,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Simulations);

@@ -1,0 +1,20 @@
+@import "../../brand.scss";
+
+.lotto-number-option {
+	border: none;
+	outline: none;
+	background: white;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	font-weight: 600;
+	font-size: 1.2em;
+	text-decoration: underline;
+	transition: 0.3s;
+	&--filled {
+		background: radial-gradient(farthest-corner at 10px 10px, red, darkred);
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+		color: black;
+	}
+}
