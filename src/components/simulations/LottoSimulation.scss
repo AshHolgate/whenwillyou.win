@@ -14,7 +14,7 @@
 	position: relative;
 	&--active {
 		background: red;
-		height: 200px;
+		height: 300px;
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 	}
 	&__title {
@@ -41,14 +41,14 @@
 		transition: 0.5s;
 		opacity: 0;
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-start;
 		&--active {
 			opacity: 1;
 			margin: 30px 0 5px;
 		}
 	}
 	&__sub-title {
-		margin: 0;
+		margin: 0 auto 0 0;
 		font-weight: 700;
 		color: white;
 		user-select: none;
@@ -62,7 +62,7 @@
 		align-items: center;
 		padding: 0 10px;
 		border-radius: 10px;
-		margin: 0;
+		margin: 0 0 0 5px;
 		font-weight: 700;
 		color: red;
 		background: rgba(255,255,255,0.75);
@@ -73,6 +73,7 @@
 			background: white;
 		}
 	}
+	
 	&__numbers-container {
 		min-height: 52px;
 		width: 100%;
@@ -84,5 +85,54 @@
 		&--active {
 			opacity: 1;
 		}
+	}
+	&__data-organisation-container {
+		width: 100%;
+		transition: 0.5s;
+		opacity: 0;
+		display: flex;
+		justify-content: space-between;
+		&--active {
+			opacity: 1;
+		}
+	}
+	&__description-container {
+		color: white;
+		width: 50%;
+	}
+	&__description-container-title {
+		font-weight: 700;
+		margin: 0 0 5px;
+	}
+	&__description-container-content {
+		margin: 0 0 5px;
+		font-size: 0.8em;
+		line-height: 16px;
+	}
+	&__winnings-container {
+		color: white;
+		width: 50%;
+		text-align: right;
+	}
+	&__winnings-container-title {
+		font-weight: 700;
+		margin: 0 0 5px;
+	}
+	&__winnings-container-content {
+		margin: 0 0 5px;
+		font-size: 0.8em;
+		line-height: 16px;
+	}
+	&__start-simulation-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: black;
+		color: white;
+		opacity: 0.2;
+		width: 100%;
+		position: absolute;
+		bottom: 10px;
+		left: 0px;
 	}
 }
