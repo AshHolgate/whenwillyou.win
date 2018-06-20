@@ -1,10 +1,10 @@
 import { WhenWillYouWinStore } from "../redux/store";
 import { Dispatch, connect } from "react-redux";
-import Simulations, { SimulationsDispatchProps } from "../components/simulations/Simulations";
+import Simulations, { SimulationsDispatchProps, SimulationsStoreProps } from "../components/simulations/Simulations";
 import { lottoSimulationSelector } from "../redux/simulationsReducer/selectors";
 import { changeLottoSelectedNumberAction } from "../redux/simulationsReducer/actions";
 
-const mapStateToProps = (store: WhenWillYouWinStore) => ({
+const mapStateToProps = (store: WhenWillYouWinStore): SimulationsStoreProps => ({
 	lottoSimulation: lottoSimulationSelector(store)
 });
 
