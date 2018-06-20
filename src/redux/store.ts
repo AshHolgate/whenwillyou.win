@@ -9,7 +9,7 @@ const reducers = combineReducers<WhenWillYouWinStore>({
 	simulationsReducer
 });
 
-const store = createStore<WhenWillYouWinStore, any, null, null >(
+const store = createStore<WhenWillYouWinStore, any, any, any>(
 	reducers,
 	(window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );

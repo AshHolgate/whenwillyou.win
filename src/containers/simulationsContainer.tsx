@@ -8,7 +8,7 @@ const mapStateToProps = (store: WhenWillYouWinStore): SimulationsStoreProps => (
 	lottoSimulation: lottoSimulationSelector(store)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>): SimulationsDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): SimulationsDispatchProps => ({
 	onLottoSelectedNumbersChange: (value: (number|null)[]): void => { dispatch(changeLottoSelectedNumberAction({ value })); }
 });
 
