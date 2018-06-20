@@ -36,7 +36,17 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	handleLuckyDipClick(e: React.MouseEvent<HTMLElement>) {
 		if (!this.state.isOpen) return;
 		e.stopPropagation();
-		console.log(this);
+		let newNumbers: (number|null)[] = [null, null, null, null, null, null];
+		for (let i = 0; i <= 5; i++) {
+			let newNumber = Math.floor((Math.random() * 60) + 1);
+			if (newNumbers.indexOf(newNumber) === -1) {
+				newNumbers[i] = newNumber;
+			} else {
+				i--;
+			}
+		}
+		newNumbers.sort(function(a: number, b: number) { return a - b; });
+		this.props.onSelectedNumbersChange(newNumbers);
 	}
 
 	handleSelectedNumberChange(value: number, index: number) {

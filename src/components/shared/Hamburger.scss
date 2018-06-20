@@ -12,19 +12,15 @@
 		background: #444;
 		transition: 0.2s;
 	}
-	&__top-bun {
-		&--active {
+	&--active {
+		.hamburger__top-bun {
 			transform: rotate(45deg) translateX(4px) translateY(5px);
 		}
-	}
-	&__meat {
-		&--active {
+		.hamburger__meat {
 			opacity: 0;
 			transform: translateX(-15px);
 		}
-	}
-	&__bottom-bun {
-		&--active {
+		.hamburger__bottom-bun {
 			transform: rotate(-45deg) translateX(4px) translateY(-5px);
 		}
 	}
