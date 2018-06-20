@@ -21,16 +21,19 @@ export default class LottoNumberOption extends React.Component<LottoNumberOption
 		e.stopPropagation();
 	}
 
-	handleNumericChange(value: number) {
-		console.log(value);
-		this.props.onChange(value, this.props.index);
+	handleNumericChange(value: string) {
+		let parsedValue = parseInt(value, 0);
+		if (parsedValue === NaN) return;
+		if (parsedValue > 60) return;
+		this.props.onChange(parseInt(value, 0), this.props.index);
 	}
 
 	render() {
 		let { value } = this.props;
+
 		return (
 			<input className={`lotto-number-option ${value ? "lotto-number-option--filled" : ""}`} onClick={(e) => this.handleClick(e)} value={value || ""}
-				onChange={e => this.handleNumericChange(parseInt(e.target.value, 0))} type="number"/>
+				onChange={e => this.handleNumericChange(e.target.value)} type="string"/>
 		);
 	}
 }

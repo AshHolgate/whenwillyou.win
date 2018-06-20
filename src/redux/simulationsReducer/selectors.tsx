@@ -1,5 +1,6 @@
-import { WhenWillYouWinStore } from "../store";
-import SimulationData from "../../models/Simulation";
 
-export const lottoSimulationSelector = (store: WhenWillYouWinStore): SimulationData => store.simulationsReducer.lottoSimulation;
-export const lottoSelectedNumbersSelector = (store: WhenWillYouWinStore): (number|null)[] => store.simulationsReducer.lottoSimulation.numbersChosen;
+import { WhenWillYouWinStore } from "../store";
+
+export const lottoNumbersChosenSelector = (store: WhenWillYouWinStore) => store.simulationsReducer.lottoNumbersChosen;
+export const lottoDrawsSelector = (store: WhenWillYouWinStore) => store.simulationsReducer.lottoDraws;
+export const lottoKeyFactsSelector = (store: WhenWillYouWinStore) => store.simulationsReducer.lottoKeyFacts;

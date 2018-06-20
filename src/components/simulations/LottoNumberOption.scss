@@ -11,10 +11,11 @@
 	font-weight: 600;
 	font-size: 1.2em;
 	text-decoration: underline;
-	transition: 0.5s;
+	order: 100;
 	&--filled {
 		background: radial-gradient(farthest-corner at 10px 10px, red, darkred);
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 		color: white;
+		
 	}
 }
