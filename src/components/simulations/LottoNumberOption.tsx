@@ -4,6 +4,7 @@ require("./LottoNumberOption.scss");
 export interface LottoNumberOptionDataProps {
 	value: number | null;
 	index: number;
+	disabled: boolean;
 }
 
 export interface LottoNumberOptionDispatchProps {
@@ -30,11 +31,11 @@ export default class LottoNumberOption extends React.Component<LottoNumberOption
 	}
 
 	render() {
-		let { value } = this.props;
+		let { value, disabled } = this.props;
 
 		return (
 			<input className={`lotto-number-option ${value ? "lotto-number-option--filled" : ""}`} onClick={(e) => this.handleClick(e)} value={value || ""}
-				onChange={e => this.handleNumericChange(e.target.value)} type="string" pattern="\d*"/>
+				onChange={e => this.handleNumericChange(e.target.value)} type="string" pattern="\d*" disabled={disabled}/>
 		);
 	}
 }

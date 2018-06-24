@@ -32,6 +32,14 @@ export default class Simulations extends React.Component<SimulationsProps> {
 					onSimulationInit={(simulating: IsSimulating) => onSimulationInit(simulating)}
 					isSimulating={isSimulating === 1}
 					isVisible={isSimulating === 0 || isSimulating === 1} />
+				<LottoSimulation
+					lottoNumbersChosen={lottoNumbersChosen}
+					lottoDraws={lottoDraws}
+					lottoKeyFacts={lottoKeyFacts}
+					onSelectedNumbersChange={(newNumbers: (number | null)[]) => onLottoSelectedNumbersChange(newNumbers)}
+					onSimulationInit={(simulating: IsSimulating) => onSimulationInit(simulating)}
+					isSimulating={isSimulating === 2}
+					isVisible={isSimulating === 0 || isSimulating === 2} />
 			</div>
 		);
 	}
