@@ -21,11 +21,12 @@ export default class LottoNumberOption extends React.Component<LottoNumberOption
 		e.stopPropagation();
 	}
 
-	handleNumericChange(value: string) {
-		let parsedValue = parseInt(value, 0);
+	handleNumericChange(value: string|null) {
+		if (value === "") value = null;
+		let parsedValue = parseInt(value!, 0);
 		if (parsedValue === NaN) return;
 		if (parsedValue > 60) return;
-		this.props.onChange(parseInt(value, 0), this.props.index);
+		this.props.onChange(parsedValue, this.props.index);
 	}
 
 	render() {

@@ -1,11 +1,11 @@
 @import "../../brand.scss";
 
 .lotto-simulation {
-	padding: 5px 10px;
+	padding: 5px 0;
 	background: #DDDDDD;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+	align-items: center;
 	border-radius: 10px;
 	transition: 0.5s;
 	height: 51px;
@@ -14,7 +14,7 @@
 	position: relative;
 	&--active {
 		background: red;
-		height: 300px;
+		height: 310px;
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 	}
 	&__title {
@@ -34,16 +34,24 @@
 			transform: translateX(9px);
 		}
 	}
+	&__simulation-options-container {
+		position: relative;
+		width: calc(100% - 20px);
+		min-height: 305px;
+		transition: 0.5s;
+		opacity: 0;
+		&--active {
+			opacity: 1;
+		}
+	}
 	&__sub-title-container {
 		min-height: 19px;
 		margin: 40px 0 5px;
 		width: 100%;
 		transition: 0.5s;
-		opacity: 0;
 		display: flex;
 		justify-content: flex-start;
 		&--active {
-			opacity: 1;
 			margin: 30px 0 5px;
 		}
 	}
@@ -69,32 +77,21 @@
 		outline: none;
 		border: none;
 		user-select: none;
-		&:focus {
-			background: white;
-		}
 	}
 	
 	&__numbers-container {
 		min-height: 52px;
 		width: 100%;
 		transition: 0.5s;
-		opacity: 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		&--active {
-			opacity: 1;
-		}
 	}
 	&__data-organisation-container {
 		width: 100%;
 		transition: 0.5s;
-		opacity: 0;
 		display: flex;
 		justify-content: space-between;
-		&--active {
-			opacity: 1;
-		}
 	}
 	&__description-container {
 		color: white;
@@ -124,15 +121,28 @@
 		line-height: 16px;
 	}
 	&__start-simulation-button {
+		padding: 5px;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background: black;
+		background: #CB0000;
 		color: white;
-		opacity: 0.2;
-		width: 100%;
+		opacity: 0.5;
+		width: 120%;
 		position: absolute;
-		bottom: 10px;
-		left: 0px;
+		bottom: 0px;
+		left: -10%;
+		transition: 0.5s;
+		&--active {
+			opacity: 1;
+			cursor: pointer;
+		}
+	}
+	&__start-simulation-button-text {
+		margin: 0;
+		line-height: 12px;
+		font-size: 0.8em;
+		text-transform: uppercase;
 	}
 }
