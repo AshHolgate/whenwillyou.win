@@ -1,16 +1,19 @@
 import * as React from "react";
 import LottoNumberOption from "./LottoNumberOption";
-import { Draw } from "../../models/Simulation";
+import { Draw, IsSimulating } from "../../models/Simulation";
 require("./LottoSimulation.scss");
 
 export interface LottoSimulationDataProps {
 	lottoNumbersChosen: (number | null)[];
 	lottoDraws: Draw[];
 	lottoKeyFacts: string[];
+	isSimulating: boolean;
+	isVisible: boolean;
 }
 
 export interface LottoSimulationDispatchProps {
 	onSelectedNumbersChange: (newNumbers: (number | null)[]) => void;
+	onSimulationInit: (simulating: IsSimulating) => void;
 }
 
 export type LottoSimulationProps = LottoSimulationDataProps & LottoSimulationDispatchProps;
@@ -38,17 +41,22 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	handleLuckyDipClick(e: React.MouseEvent<HTMLElement>) {
 		if (!this.state.isOpen) return;
 		e.stopPropagation();
-		let newNumbers: (number | null)[] = [null, null, null, null, null, null];
+		let newNumbers = this.generateNewDraw();
+		this.props.onSelectedNumbersChange(newNumbers);
+	}
+
+	generateNewDraw() {
+		let newDraw = [];
 		for (let i = 0; i <= 5; i++) {
 			let newNumber = Math.floor((Math.random() * 60) + 1);
-			if (newNumbers.indexOf(newNumber) === -1) {
-				newNumbers[i] = newNumber;
+			if (newDraw.indexOf(newNumber) === -1) {
+				newDraw.push(newNumber);
 			} else {
 				i--;
 			}
 		}
-		newNumbers.sort(function (a: number, b: number) { return a - b; });
-		this.props.onSelectedNumbersChange(newNumbers);
+		newDraw.sort(function (a: number, b: number) { return a - b; });
+		return newDraw;
 	}
 
 	handleClearClick(e: React.MouseEvent<HTMLElement>) {
@@ -58,6 +66,12 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		this.props.onSelectedNumbersChange(newNumbers);
 	}
 
+	handleStartSimulationClick(e: React.MouseEvent<HTMLElement>) {
+		if (!this.state.chosenNumbersValid) return;
+		e.stopPropagation();
+		this.props.onSimulationInit(1);
+	}
+
 	handleSelectedNumberChange(value: number | null, index: number) {
 		if (isNaN(value!)) value = null;
 		let newNumbers = this.props.lottoNumbersChosen.slice();
@@ -65,7 +79,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		this.props.onSelectedNumbersChange(newNumbers);
 	}
 
-	checkIfArrayIsUnique(arr: (number|null)[]) {
+	checkIfArrayIsUnique(arr: (number | null)[]) {
 		var myArray = arr;
 
 		for (var i = 0; i < myArray.length; i++) {
@@ -90,13 +104,18 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	render() {
-		let { lottoNumbersChosen } = this.props;
+		let { lottoNumbersChosen, isVisible, isSimulating } = this.props;
 		let { isOpen, chosenNumbersValid } = this.state;
 		return (
-			<div className={`lotto-simulation ${isOpen ? "lotto-simulation--active" : ""}`} onClick={() => this.handleOpenClick()}>
-				<h2 className={`lotto-simulation__title ${isOpen ? "lotto-simulation__title--active" : ""}`} >Lotto</h2>
-				<div className={`lotto-simulation__simulation-options-container ${isOpen ? "lotto-simulation__simulation-options-container--active" : ""}`}>
-					<div className={`lotto-simulation__sub-title-container ${isOpen ? "lotto-simulation__sub-title-container--active" : ""}`}>
+			<div
+				className={`lotto-simulation ${isOpen ? "lotto-simulation--open" : ""}
+				${isSimulating ? "lotto-simulation--simulating" : ""}
+				${isVisible ? "" : "lotto-simulation--hidden"}`}
+				onClick={() => this.handleOpenClick()}>
+
+				<h2 className={`lotto-simulation__title ${isOpen ? "lotto-simulation__title--open" : ""}`} >Lotto</h2>
+				<div className={`lotto-simulation__simulation-options-container ${isOpen ? "lotto-simulation__simulation-options-container--open" : ""}`}>
+					<div className={`lotto-simulation__sub-title-container ${isOpen ? "lotto-simulation__sub-title-container--open" : ""}`}>
 						<p className={`lotto-simulation__sub-title`}>Choose Numbers</p>
 						<button className={`lotto-simulation__lucky-dip-button`} onClick={(e) => this.handleLuckyDipClick(e)}>Lucky Dip</button>
 						<button className={`lotto-simulation__lucky-dip-button`} onClick={(e) => this.handleClearClick(e)}>Clear</button>
@@ -108,7 +127,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 						})}
 
 					</div>
-					<div className={`lotto-simulation__data-organisation-container ${isOpen ? "lotto-simulation__data-organisation-container--active" : ""}`}>
+					<div className={`lotto-simulation__data-organisation-container ${isOpen ? "lotto-simulation__data-organisation-container--open" : ""}`}>
 						<div className="lotto-simulation__description-container">
 							<p className="lotto-simulation__description-container-title">
 								Description
@@ -144,7 +163,8 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 						</p>
 						</div>
 					</div>
-					<div className={`lotto-simulation__start-simulation-button ${chosenNumbersValid ? "lotto-simulation__start-simulation-button--active" : ""}`}>
+					<div className={`lotto-simulation__start-simulation-button ${chosenNumbersValid ? "lotto-simulation__start-simulation-button--open" : ""}`}
+						onClick={(e) => this.handleStartSimulationClick(e)}>
 						<p className="lotto-simulation__start-simulation-button-text">Start New</p>
 						<p className="lotto-simulation__start-simulation-button-text">Simulation</p>
 					</div>

@@ -1,5 +1,4 @@
 import * as React from "react";
-import Hamburger from "./Hamburger";
 require("./Header.scss");
 
 export interface HeaderProps {
@@ -20,7 +19,6 @@ export default class Header extends React.Component<HeaderProps> {
 						<h1 className="header__letter header__5">W</h1>
 					</div>
 				</div>
-				<Hamburger isActive={false}/>
 			</div>
 		);
 	}

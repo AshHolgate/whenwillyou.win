@@ -1,11 +1,12 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
-import { Draw } from "../../models/Simulation";
-import { changeLottoSelectedNumberAction } from "./actions";
+import { Draw, IsSimulating } from "../../models/Simulation";
+import { changeLottoSelectedNumberAction, onSimulationInitAction } from "./actions";
 
 export interface SimulationsReducerState {
 	lottoNumbersChosen: (number|null)[];
 	lottoDraws: Draw[];
 	lottoKeyFacts: string[];
+	isSimulating: IsSimulating;
 }
 
 const initialState: SimulationsReducerState = {
@@ -18,10 +19,12 @@ const initialState: SimulationsReducerState = {
 		null
 	],
 	lottoDraws: [],
-	lottoKeyFacts: []
+	lottoKeyFacts: [],
+	isSimulating: 0
 };
 
 const reducer = reducerWithInitialState(initialState)
-	.case(changeLottoSelectedNumberAction, (state, payload) => ({ ...state, lottoNumbersChosen: payload.value }));
+	.case(changeLottoSelectedNumberAction, (state, payload) => ({ ...state, lottoNumbersChosen: payload.value }))
+	.case(onSimulationInitAction, (state, payload) => ({ ...state, isSimulating: payload.value }));
 
 export default reducer;
