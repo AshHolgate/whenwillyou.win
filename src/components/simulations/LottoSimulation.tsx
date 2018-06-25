@@ -188,6 +188,20 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 						</div>
 					</div>
 					<div className={`lotto-simulation__during-simulation-container ${isSimulating ? "lotto-simulation__during-simulation-container--simulating" : ""}`}>
+						<div className="lotto-simulation__simulation-draws-container">
+							<div className="lotto-simulation__draws-main-container">
+								<div className="lotto-simulation__draw-row">
+									<p className="lotto-simulation__draw-id lotto-simulation__draw-id--title">Draw</p>
+									<p className="lotto-simulation__draw-numbers lotto-simulation__draw-numbers--title">Numbers</p>
+									<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings--title">Winnings</p>
+								</div>
+								<div className="lotto-simulation__draw-row">
+									<p className="lotto-simulation__draw-id lotto-simulation__draw-id--title">Draw</p>
+									<p className="lotto-simulation__draw-numbers lotto-simulation__draw-numbers--title">Numbers</p>
+									<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings--title">Winnings</p>
+								</div>
+							</div>
+						</div>
 						<div className={`lotto-simulation__start-simulation-button ${chosenNumbersValid ? "lotto-simulation__start-simulation-button--open" : ""}`}
 							onClick={(e) => this.handleEndSimulationClick(e)}>
 							<p className="lotto-simulation__start-simulation-button-text">End</p>

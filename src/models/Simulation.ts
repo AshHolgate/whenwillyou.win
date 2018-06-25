@@ -1,6 +1,6 @@
 export interface Draw {
 	numbersDrawn: number[];
-	winnings: number;
+	winnings: number | null;
 }
 
 export enum IsSimulating {

@@ -18,7 +18,13 @@ const initialState: SimulationsReducerState = {
 		null,
 		null
 	],
-	lottoDraws: [],
+	lottoDraws: [
+		{numbersDrawn: [], winnings: null},
+		{numbersDrawn: [], winnings: null},
+		{numbersDrawn: [], winnings: null},
+		{numbersDrawn: [], winnings: null},
+		{numbersDrawn: [], winnings: null}
+	],
 	lottoKeyFacts: [],
 	isSimulating: 0
 };
