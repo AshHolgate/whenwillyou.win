@@ -18,7 +18,7 @@
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 	}
 	&--simulating {
-		height: 410px;
+		height: 550px;
 	}
 	&--hidden {
 		height: 0px;
@@ -86,7 +86,7 @@
 			opacity: 1;
 		}
 		&--simulating {
-			min-height: 353px;
+			min-height: 492px;
 		}
 	}
 	&__pre-simulation-container {
@@ -191,6 +191,7 @@
 	}
 	&__draws-main-container {
 		background: white;
+		margin-top: 5px;
 	}
 	&__draw-row {
 		display: flex;
@@ -198,6 +199,7 @@
 		align-items: center;
 		padding: 2px 5px;
 		color: #666;
+		height: 19px;
 		&:nth-child(even) {
 			background: #f4f4f4;	
 		}

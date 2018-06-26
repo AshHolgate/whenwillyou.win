@@ -1,6 +1,17 @@
 export interface Draw {
+	drawNumber: number | null;
 	numbersDrawn: number[];
 	winnings: number | null;
+}
+
+export interface SimulationHistory {
+	draws: number;
+	years: number;
+	months: number;
+	days: number;
+	dayCycleCount: number;
+	spent: number;
+	won: number;
 }
 
 export enum IsSimulating {

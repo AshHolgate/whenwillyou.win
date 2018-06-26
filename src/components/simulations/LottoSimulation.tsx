@@ -1,12 +1,13 @@
 import * as React from "react";
 import LottoNumberOption from "./LottoNumberOption";
-import { Draw, IsSimulating } from "../../models/Simulation";
+import { Draw, IsSimulating, SimulationHistory } from "../../models/Simulation";
 require("./LottoSimulation.scss");
 
 export interface LottoSimulationDataProps {
 	lottoNumbersChosen: (number | null)[];
 	lottoDraws: Draw[];
 	lottoKeyFacts: string[];
+	lottoSimulationHistory: SimulationHistory;
 	isSimulating: boolean;
 	isVisible: boolean;
 }
@@ -14,6 +15,7 @@ export interface LottoSimulationDataProps {
 export interface LottoSimulationDispatchProps {
 	onSelectedNumbersChange: (newNumbers: (number | null)[]) => void;
 	onSimulationInit: (simulating: IsSimulating) => void;
+	onUpdateLottoDraws: (newDraws: Draw[]) => void;
 }
 
 export type LottoSimulationProps = LottoSimulationDataProps & LottoSimulationDispatchProps;
@@ -43,13 +45,27 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	handleLuckyDipClick(e: React.MouseEvent<HTMLElement>) {
 		if (!this.state.isOpen) return;
 		e.stopPropagation();
-		let newNumbers = this.generateNewDraw();
+		let newNumbers = this.generateLuckyDip();
 		this.props.onSelectedNumbersChange(newNumbers);
+	}
+
+	generateLuckyDip() {
+		let newLuckyDip = [];
+		for (let i = 0; i < 6; i++) {
+			let newNumber = Math.floor((Math.random() * 60) + 1);
+			if (newLuckyDip.indexOf(newNumber) === -1) {
+				newLuckyDip.push(newNumber);
+			} else {
+				i--;
+			}
+		}
+		newLuckyDip.sort(function (a: number, b: number) { return a - b; });
+		return newLuckyDip;
 	}
 
 	generateNewDraw() {
 		let newDraw = [];
-		for (let i = 0; i <= 5; i++) {
+		for (let i = 0; i < 6; i++) {
 			let newNumber = Math.floor((Math.random() * 60) + 1);
 			if (newDraw.indexOf(newNumber) === -1) {
 				newDraw.push(newNumber);
@@ -58,6 +74,8 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 			}
 		}
 		newDraw.sort(function (a: number, b: number) { return a - b; });
+		let newBonusNumber = Math.floor((Math.random() * 60) + 1);
+		newDraw.push(newBonusNumber);
 		return newDraw;
 	}
 
@@ -77,9 +95,54 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	handleEndSimulationClick(e: React.MouseEvent<HTMLElement>) {
-		if (!this.state.chosenNumbersValid) return;
+		let newDraws = this.calculateNewDraws();
 		e.stopPropagation();
-		this.props.onSimulationInit(0);
+		this.props.onUpdateLottoDraws(newDraws);
+	}
+
+	calculateNewDraws() {
+		let currentDraws = this.props.lottoDraws;
+		currentDraws.pop();
+		let newDrawIndex = 0;
+		if (this.props.lottoDraws[0].drawNumber === null) newDrawIndex = 1;
+		else newDrawIndex = this.props.lottoDraws[0].drawNumber! + 1;
+		let newDrawNumbers = this.generateNewDraw();
+		let newDrawMatches = this.calculateMatches(newDrawNumbers);
+		let newDrawWinnings = this.calculateWinnings(newDrawMatches);
+		currentDraws.unshift({drawNumber: newDrawIndex, numbersDrawn: newDrawNumbers, winnings: newDrawWinnings});
+		return currentDraws;
+	}
+
+	calculateMatches(simulation: number[]) {
+		let numberOfMatches = 0;
+		for (let i = 0; i < 6; i++) {
+			if (this.props.lottoNumbersChosen.indexOf(simulation[i]) + 1) {
+				numberOfMatches++;
+			}
+		}
+		return numberOfMatches;
+	}
+
+	calculateWinnings(matches: number) {
+		if (matches <= 1) {
+			return null;
+		}
+		if (matches === 2) {
+			return 2.5;
+		}
+		if (matches === 3) {
+			return 25;
+		}
+		if (matches === 4) {
+			return 123;
+		}
+		if (matches === 5) {
+			return 1457;
+		}
+		if (matches === 6) {
+			return 22000000;
+		}
+		return 0;
 	}
 
 	handleSelectedNumberChange(value: number | null, index: number) {
@@ -90,15 +153,19 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	checkIfArrayIsUnique(arr: (number | null)[]) {
-		var myArray = arr;
-
-		for (var i = 0; i < myArray.length; i++) {
+		let myArray = arr;
+		for (let i = 0; i < myArray.length; i++) {
 			if (myArray.indexOf(myArray[i]) !== myArray.lastIndexOf(myArray[i])) {
 				return false;
 			}
 		}
-
 		return true;
+	}
+
+	addDaysToDate(date: Date, days: number) {
+		let result = new Date(date);
+		result.setDate(result.getDate() + days);
+		return result;
 	}
 
 	componentDidUpdate() {
@@ -114,7 +181,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	render() {
-		let { lottoNumbersChosen, isVisible, isSimulating } = this.props;
+		let { lottoNumbersChosen, isVisible, isSimulating, lottoDraws } = this.props;
 		let { isOpen, chosenNumbersValid } = this.state;
 		return (
 			<div
@@ -195,16 +262,18 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 									<p className="lotto-simulation__draw-numbers lotto-simulation__draw-numbers--title">Numbers</p>
 									<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings--title">Winnings</p>
 								</div>
-								<div className="lotto-simulation__draw-row">
-									<p className="lotto-simulation__draw-id lotto-simulation__draw-id--title">Draw</p>
-									<p className="lotto-simulation__draw-numbers lotto-simulation__draw-numbers--title">Numbers</p>
-									<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings--title">Winnings</p>
-								</div>
+								{lottoDraws.map((key, index) => {
+									return <div key={index} className="lotto-simulation__draw-row">
+										<p className="lotto-simulation__draw-id lotto-simulation__draw-id--title">{key.drawNumber}</p>
+										<p className="lotto-simulation__draw-numbers lotto-simulation__draw-numbers--title">{key.numbersDrawn}</p>
+										<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings--title">{key.winnings}</p>
+									</div>;
+								})}
 							</div>
 						</div>
 						<div className={`lotto-simulation__start-simulation-button ${chosenNumbersValid ? "lotto-simulation__start-simulation-button--open" : ""}`}
 							onClick={(e) => this.handleEndSimulationClick(e)}>
-							<p className="lotto-simulation__start-simulation-button-text">End</p>
+							<p className="lotto-simulation__start-simulation-button-text">Add</p>
 							<p className="lotto-simulation__start-simulation-button-text">Simulation</p>
 						</div>
 					</div>
