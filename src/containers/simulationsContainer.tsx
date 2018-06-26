@@ -1,22 +1,26 @@
 import { WhenWillYouWinStore } from "../redux/store";
 import { Dispatch, connect } from "react-redux";
 import Simulations, { SimulationsDispatchProps, SimulationsStoreProps } from "../components/simulations/Simulations";
-import { lottoNumbersChosenSelector, lottoDrawsSelector, lottoKeyFactsSelector, isSimulatingSelector, lottoSimulationHistorySelector } from "../redux/simulationsReducer/selectors";
-import { changeLottoSelectedNumberAction, onSimulationInitAction, onUpdateLottoDrawsAction } from "../redux/simulationsReducer/actions";
-import { IsSimulating, Draw } from "../models/Simulation";
+import { lottoNumbersChosenSelector, lottoDrawsSelector, lottoKeyFactsSelector, lottoSimulationHistorySelector,
+	isLottoSimulationOpenSelector, areLottoChosenNumbersValidSelector, simulationStatusSelector } from "../redux/simulationsReducer/selectors";
+import { changeLottoSelectedNumberAction, onUpdateLottoDrawsAction, onUpdateSimulationStatusAction, onLottoOpenAction } from "../redux/simulationsReducer/actions";
+import { Draw, SimulationStatus } from "../models/Simulation";
 
 const mapStateToProps = (store: WhenWillYouWinStore): SimulationsStoreProps => ({
 	lottoNumbersChosen: lottoNumbersChosenSelector(store),
 	lottoDraws: lottoDrawsSelector(store),
 	lottoKeyFacts: lottoKeyFactsSelector(store),
 	lottoSimulationHistory: lottoSimulationHistorySelector(store),
-	isSimulating: isSimulatingSelector(store)
+	simulationStatus: simulationStatusSelector(store),
+	isLottoSimulationOpen: isLottoSimulationOpenSelector(store),
+	areLottoChosenNumbersValid: areLottoChosenNumbersValidSelector(store)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): SimulationsDispatchProps => ({
-	onLottoSelectedNumbersChange: (value: (number|null)[]): void => { dispatch(changeLottoSelectedNumberAction({ value })); },
+	onLottoSelectedNumbersChange: (value: (number|null)[], areNumbersValid): void => { dispatch(changeLottoSelectedNumberAction({ value, areNumbersValid })); },
 	onUpdateLottoDraws: (value: Draw[]): void => { dispatch(onUpdateLottoDrawsAction({ value })); },
-	onSimulationInit: (value: IsSimulating): void => { dispatch(onSimulationInitAction({ value })); }
+	handleLottoOpenClick: (value: boolean): void => { dispatch(onLottoOpenAction({ value })); },
+	onUpdateSimulationStatus: (value: SimulationStatus): void => { dispatch(onUpdateSimulationStatusAction({ value })); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Simulations);

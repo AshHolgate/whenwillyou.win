@@ -1,7 +1,7 @@
 import * as React from "react";
 import Divider from "../shared/Divider";
 import LottoSimulation from "./LottoSimulation";
-import { Draw, IsSimulating, SimulationHistory } from "../../models/Simulation";
+import { Draw, SimulationHistory, SimulationStatus } from "../../models/Simulation";
 require("./Simulations.scss");
 
 export interface SimulationsStoreProps {
@@ -9,12 +9,15 @@ export interface SimulationsStoreProps {
 	lottoDraws: Draw[];
 	lottoKeyFacts: string[];
 	lottoSimulationHistory: SimulationHistory;
-	isSimulating: IsSimulating;
+	simulationStatus: SimulationStatus;
+	isLottoSimulationOpen: boolean;
+	areLottoChosenNumbersValid: boolean;
 }
 
 export interface SimulationsDispatchProps {
-	onLottoSelectedNumbersChange: (newNumbers: (number | null)[]) => void;
-	onSimulationInit: (simulating: IsSimulating) => void;
+	onLottoSelectedNumbersChange: (newNumbers: (number | null)[], areNumbersValid: boolean) => void;
+	onUpdateSimulationStatus: (simulationStatus: SimulationStatus) => void;
+	handleLottoOpenClick: (lottoShouldBeOpen: boolean) => void;
 	onUpdateLottoDraws: (newDraws: Draw[]) => void;
 }
 
@@ -22,7 +25,8 @@ export type SimulationsProps = SimulationsStoreProps & SimulationsDispatchProps;
 
 export default class Simulations extends React.Component<SimulationsProps> {
 	render() {
-		let { lottoNumbersChosen, lottoDraws, lottoKeyFacts, lottoSimulationHistory, onLottoSelectedNumbersChange, onUpdateLottoDraws, onSimulationInit, isSimulating } = this.props;
+		let { lottoNumbersChosen, lottoDraws, lottoKeyFacts, lottoSimulationHistory, onLottoSelectedNumbersChange, onUpdateLottoDraws,
+			onUpdateSimulationStatus, simulationStatus, isLottoSimulationOpen, areLottoChosenNumbersValid, handleLottoOpenClick } = this.props;
 		return (
 			<div className="simulations">
 				<Divider title="Simulations" />
@@ -31,11 +35,15 @@ export default class Simulations extends React.Component<SimulationsProps> {
 					lottoDraws={lottoDraws}
 					lottoKeyFacts={lottoKeyFacts}
 					lottoSimulationHistory={lottoSimulationHistory}
-					onUpdateLottoDraws={(newDraws: Draw[]) => onUpdateLottoDraws(newDraws)}
-					onSelectedNumbersChange={(newNumbers: (number | null)[]) => onLottoSelectedNumbersChange(newNumbers)}
-					onSimulationInit={(simulating: IsSimulating) => onSimulationInit(simulating)}
-					isSimulating={isSimulating === 1}
-					isVisible={isSimulating === 0 || isSimulating === 1} />
+					onUpdateDraws={(newDraws: Draw[]) => onUpdateLottoDraws(newDraws)}
+					handleOpenClick={(shouldBeOpen: boolean) => handleLottoOpenClick(shouldBeOpen)}
+					onSelectedNumbersChange={(newNumbers: (number | null)[], areNumbersValid: boolean) => onLottoSelectedNumbersChange(newNumbers, areNumbersValid)}
+					updateSimulationStatus={(simulating: SimulationStatus) => onUpdateSimulationStatus(simulating)}
+					isSimulating={simulationStatus === 1}
+					isVisible={simulationStatus === 0 || simulationStatus === 1} 
+					isOpen={isLottoSimulationOpen}
+					chosenNumbersValid={areLottoChosenNumbersValid}
+					/>
 			</div>
 		);
 	}

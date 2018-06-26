@@ -14,8 +14,8 @@ export interface SimulationHistory {
 	won: number;
 }
 
-export enum IsSimulating {
-	nothing = 0,
+export enum SimulationStatus {
+	notSimulating = 0,
 	lotto = 1,
 	euromillions = 2
 }

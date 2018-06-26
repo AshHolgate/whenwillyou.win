@@ -1,13 +1,15 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
-import { Draw, IsSimulating, SimulationHistory } from "../../models/Simulation";
-import { changeLottoSelectedNumberAction, onSimulationInitAction, onUpdateLottoDrawsAction } from "./actions";
+import { Draw, SimulationHistory, SimulationStatus } from "../../models/Simulation";
+import { changeLottoSelectedNumberAction, onUpdateLottoDrawsAction, onUpdateSimulationStatusAction, onLottoOpenAction } from "./actions";
 
 export interface SimulationsReducerState {
-	lottoNumbersChosen: (number|null)[];
+	lottoNumbersChosen: (number | null)[];
 	lottoDraws: Draw[];
 	lottoKeyFacts: string[];
 	lottoSimulationHistory: SimulationHistory;
-	isSimulating: IsSimulating;
+	simulationStatus: SimulationStatus;
+	isLottoSimulationOpen: boolean;
+	areLottoChosenNumbersValid: boolean;
 }
 
 const initialState: SimulationsReducerState = {
@@ -20,20 +22,23 @@ const initialState: SimulationsReducerState = {
 		null
 	],
 	lottoDraws: [
-		{drawNumber: null, numbersDrawn: [], winnings: null},
-		{drawNumber: null, numbersDrawn: [], winnings: null},
-		{drawNumber: null, numbersDrawn: [], winnings: null},
-		{drawNumber: null, numbersDrawn: [], winnings: null},
-		{drawNumber: null, numbersDrawn: [], winnings: null}
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null }
 	],
 	lottoKeyFacts: [],
-	lottoSimulationHistory: {draws: 0, years: 0, months: 0, days: 0, dayCycleCount: 0, spent: 0, won: 0},
-	isSimulating: 0
+	lottoSimulationHistory: { draws: 0, years: 0, months: 0, days: 0, dayCycleCount: 0, spent: 0, won: 0 },
+	simulationStatus: SimulationStatus.notSimulating,
+	isLottoSimulationOpen: false,
+	areLottoChosenNumbersValid: false
 };
 
 const reducer = reducerWithInitialState(initialState)
-	.case(changeLottoSelectedNumberAction, (state, payload) => ({ ...state, lottoNumbersChosen: payload.value }))
+	.case(onLottoOpenAction, (state, payload) => ({ ...state, isLottoSimulationOpen: payload.value }))
+	.case(changeLottoSelectedNumberAction, (state, payload) => ({ ...state, lottoNumbersChosen: payload.value, areLottoChosenNumbersValid: payload.areNumbersValid }))
 	.case(onUpdateLottoDrawsAction, (state, payload) => ({ ...state, lottoDraws: payload.value }))
-	.case(onSimulationInitAction, (state, payload) => ({ ...state, isSimulating: payload.value }));
+	.case(onUpdateSimulationStatusAction, (state, payload) => ({ ...state, simulationStatus: payload.value }));
 
 export default reducer;
