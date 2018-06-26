@@ -38,7 +38,7 @@ const initialState: SimulationsReducerState = {
 const reducer = reducerWithInitialState(initialState)
 	.case(onLottoOpenAction, (state, payload) => ({ ...state, isLottoSimulationOpen: payload.value }))
 	.case(changeLottoSelectedNumberAction, (state, payload) => ({ ...state, lottoNumbersChosen: payload.value, areLottoChosenNumbersValid: payload.areNumbersValid }))
-	.case(onUpdateLottoDrawsAction, (state, payload) => ({ ...state, lottoDraws: payload.value }))
+	.case(onUpdateLottoDrawsAction, (state, payload) => ({ ...state, lottoDraws: payload.draws }))
 	.case(onUpdateSimulationStatusAction, (state, payload) => ({ ...state, simulationStatus: payload.value }));
 
 export default reducer;

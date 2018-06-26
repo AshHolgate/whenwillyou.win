@@ -30,7 +30,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		this.props.onSelectedNumbersChange(newNumbers, areNumbersValid);
 	}
 
-	areChosenNumbersValid(chosenNumbers: (number|null)[]) {
+	areChosenNumbersValid(chosenNumbers: (number | null)[]) {
 		let areChosenNumbersValid = true;
 		areChosenNumbersValid = this.checkIfArrayIsUnique(chosenNumbers);
 		if (chosenNumbers.indexOf(null) >= 0) {
@@ -51,9 +51,8 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 
 	handleOpenClick(e: React.MouseEvent<HTMLElement>) {
 		e.stopPropagation();
-		this.props.handleOpenClick(!this.props.isOpen);
-		// if (this.props.isSimulating) return;
-		// else 
+		if (this.props.isSimulating) return;
+		else this.props.handleOpenClick(!this.props.isOpen);
 	}
 
 	handleLuckyDipClick(e: React.MouseEvent<HTMLElement>) {
@@ -115,7 +114,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	calculateNewDraws() {
-		let currentDraws = this.props.lottoDraws;
+		let currentDraws = this.props.lottoDraws.slice();
 		currentDraws.pop();
 		let newDrawIndex = 0;
 		if (this.props.lottoDraws[0].drawNumber === null) newDrawIndex = 1;
@@ -123,7 +122,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		let newDrawNumbers = this.generateNewDraw();
 		let newDrawMatches = this.calculateMatches(newDrawNumbers);
 		let newDrawWinnings = this.calculateWinnings(newDrawMatches);
-		currentDraws.unshift({drawNumber: newDrawIndex, numbersDrawn: newDrawNumbers, winnings: newDrawWinnings});
+		currentDraws.unshift({ drawNumber: newDrawIndex, numbersDrawn: newDrawNumbers, winnings: newDrawWinnings });
 		console.log(currentDraws);
 		return currentDraws;
 	}
@@ -174,7 +173,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	render() {
-		let { lottoNumbersChosen, isVisible, isSimulating, lottoDraws, isOpen, chosenNumbersValid  } = this.props;
+		let { lottoNumbersChosen, isVisible, isSimulating, lottoDraws, isOpen, chosenNumbersValid } = this.props;
 		return (
 			<div
 				className={`lotto-simulation ${isOpen ? "lotto-simulation--open" : ""}

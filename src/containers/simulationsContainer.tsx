@@ -18,7 +18,7 @@ const mapStateToProps = (store: WhenWillYouWinStore): SimulationsStoreProps => (
 
 const mapDispatchToProps = (dispatch: Dispatch): SimulationsDispatchProps => ({
 	onLottoSelectedNumbersChange: (value: (number|null)[], areNumbersValid): void => { dispatch(changeLottoSelectedNumberAction({ value, areNumbersValid })); },
-	onUpdateLottoDraws: (value: Draw[]): void => { dispatch(onUpdateLottoDrawsAction({ value })); },
+	onUpdateLottoDraws: (draws: Draw[]): void => { dispatch(onUpdateLottoDrawsAction({ draws })); },
 	handleLottoOpenClick: (value: boolean): void => { dispatch(onLottoOpenAction({ value })); },
 	onUpdateSimulationStatus: (value: SimulationStatus): void => { dispatch(onUpdateSimulationStatusAction({ value })); }
 });
