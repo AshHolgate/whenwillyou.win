@@ -7,7 +7,7 @@
 	flex-direction: column;
 	align-items: center;
 	border-radius: 10px;
-	transition: 0.5s;
+	transition: 1s;
 	height: 51px;
 	margin: 5px 0;
 	overflow: hidden;
@@ -31,7 +31,7 @@
 		font-weight: 700;
 		margin: 10px 0;
 		text-transform: uppercase;
-		transition: 0.5s;
+		transition: 1s;
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
@@ -52,7 +52,7 @@
 		width: calc(100% - 20px);
 		min-height: 19px;
 		height: 0px;
-		transition: 0.5s;
+		transition: 1s;
 		opacity: 0;
 		margin: 40px 0 5px;
 		&--open {
@@ -70,7 +70,7 @@
 		position: relative;
 		width: calc(100% - 20px);
 		min-height: 52px;
-		transition: 0.5s;
+		transition: 1s;
 		opacity: 0;
 		&--open {
 			opacity: 1;
@@ -80,7 +80,7 @@
 		position: relative;
 		width: calc(100% - 20px);
 		min-height: 200px;
-		transition: 0.5s;
+		transition: 1s;
 		opacity: 0;
 		&--open {
 			opacity: 1;
@@ -91,7 +91,7 @@
 	}
 	&__pre-simulation-container {
 		width: 100%;
-		transition: 0.5s;
+		transition: 1s;
 		opacity: 1;
 		position: absolute;
 		top: 0;
@@ -103,7 +103,7 @@
 	}
 	&__during-simulation-container {
 		width: 100%;
-		transition: 0.5s;
+		transition: 1s;
 		opacity: 0;
 		pointer-events: none;
 		position: absolute;
@@ -117,7 +117,7 @@
 	&__sub-title-container {
 		margin: 0;
 		width: 100%;
-		transition: 0.5s;
+		transition: 1s;
 		display: flex;
 		justify-content: flex-start;
 	}
@@ -148,14 +148,14 @@
 	&__numbers-container {
 		min-height: 52px;
 		width: 100%;
-		transition: 0.5s;
+		transition: 1s;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 	&__data-organisation-container {
 		width: 100%;
-		transition: 0.5s;
+		transition: 1s;
 		display: flex;
 		justify-content: space-between;
 	}
@@ -194,19 +194,21 @@
 		margin-top: 5px;
 	}
 	&__draw-row {
+		user-select: none;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		padding: 2px 5px;
 		color: #666;
 		height: 19px;
+		font-size: 0.75em;
 		&:nth-child(even) {
 			background: #f4f4f4;	
 		}
 	}
 	&__draw-id {
 		margin: 0;
-		width: 50px;
+		width: 40px;
 		&--title {
 			color: #222
 		}
@@ -214,16 +216,43 @@
 	&__draw-numbers {
 		margin: 0;
 		flex-grow: 1;
-		&--title {
-			color: #222
+		color: #222
+	}
+	&__drawn-numbers-container {
+		margin: 0;
+		flex-grow: 1;
+		display: flex;
+	}
+	&__drawn-number {
+		margin: 0 5px 0 0;
+		&--match {
+			color: #222;
+			font-weight: 700;
+			text-decoration: underline;
 		}
 	}
 	&__draw-winnings {
 		margin: 0;
-		width: 150px;
+		width: 100px;
 		&--title {
 			color: #222
 		}
+	}
+	&__pause-simulation-button {
+		padding: 5px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background: #CB0000;
+		color: white;
+		opacity: 1;
+		cursor: pointer;
+		width: calc(100% + 10px);
+		position: absolute;
+		bottom: 45px;
+		left: -10px;
+		transition: 1s;
 	}
 	&__start-simulation-button {
 		padding: 5px;
@@ -238,13 +267,29 @@
 		position: absolute;
 		bottom: 0px;
 		left: -10px;
-		transition: 0.5s;
+		transition: 1s;
 		&--open {
 			opacity: 1;
 			cursor: pointer;
 		}
 	}
-	&__start-simulation-button-text {
+	&__end-simulation-button {
+		padding: 5px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background: #CB0000;
+		color: white;
+		opacity: 1;
+		cursor: pointer;
+		width: calc(100% + 10px);
+		position: absolute;
+		bottom: 0px;
+		left: -10px;
+		transition: 1s;
+	}
+	&__simulation-button-text {
 		user-select: none;
 		margin: 0;
 		line-height: 12px;

@@ -21,9 +21,19 @@ export interface LottoSimulationDispatchProps {
 	onUpdateDraws: (newDraws: Draw[]) => void;
 }
 
+export interface LottoSimulationState {
+	shouldAutoSimulate: boolean;
+}
+
 export type LottoSimulationProps = LottoSimulationDataProps & LottoSimulationDispatchProps;
 
-export default class LottoSimulation extends React.Component<LottoSimulationProps> {
+export default class LottoSimulation extends React.Component<LottoSimulationProps, LottoSimulationState> {
+	constructor(props: LottoSimulationProps) {
+		super(props);
+		this.state = {
+			shouldAutoSimulate: false
+		};
+	}
 
 	updateChosenNumbers(newNumbers: (number | null)[]) {
 		let areNumbersValid = this.areChosenNumbersValid(newNumbers);
@@ -99,7 +109,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		this.updateChosenNumbers(newNumbers);
 	}
 
-	handleStartSimulationClick(e: React.MouseEvent<HTMLElement>) {
+	handleInitiateSimulationClick(e: React.MouseEvent<HTMLElement>) {
 		if (!this.props.chosenNumbersValid) return;
 		e.stopPropagation();
 		this.props.updateSimulationStatus(1);
@@ -109,6 +119,10 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 
 	handleEndSimulationClick(e: React.MouseEvent<HTMLElement>) {
 		e.stopPropagation();
+		this.props.updateSimulationStatus(0);
+	}
+
+	draw() {
 		let newDraws = this.calculateNewDraws();
 		this.props.onUpdateDraws(newDraws);
 	}
@@ -116,14 +130,10 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	calculateNewDraws() {
 		let currentDraws = this.props.lottoDraws.slice();
 		currentDraws.pop();
-		let newDrawIndex = 0;
-		if (this.props.lottoDraws[0].drawNumber === null) newDrawIndex = 1;
-		else newDrawIndex = this.props.lottoDraws[0].drawNumber! + 1;
 		let newDrawNumbers = this.generateNewDraw();
 		let newDrawMatches = this.calculateMatches(newDrawNumbers);
 		let newDrawWinnings = this.calculateWinnings(newDrawMatches);
-		currentDraws.unshift({ drawNumber: newDrawIndex, numbersDrawn: newDrawNumbers, winnings: newDrawWinnings });
-		console.log(currentDraws);
+		currentDraws.unshift({ drawNumber: this.props.lottoSimulationHistory.draws + 1, numbersDrawn: newDrawNumbers, winnings: newDrawWinnings });
 		return currentDraws;
 	}
 
@@ -172,8 +182,22 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		return result;
 	}
 
+	handlePauseSimulationClick(e: React.MouseEvent<HTMLElement>) {
+		e.stopPropagation();
+		this.setState((prevState, props) => {
+			return { shouldAutoSimulate: !this.state.shouldAutoSimulate };
+		});
+	}
+
+	componentDidMount() {
+		window.setInterval(() => {
+			if (this.state.shouldAutoSimulate) this.draw();
+		}, 1);
+	}
+
 	render() {
-		let { lottoNumbersChosen, isVisible, isSimulating, lottoDraws, isOpen, chosenNumbersValid } = this.props;
+		let { lottoNumbersChosen, isVisible, isSimulating, lottoDraws, isOpen, chosenNumbersValid, lottoSimulationHistory } = this.props;
+		let { shouldAutoSimulate } = this.state;
 		return (
 			<div
 				className={`lotto-simulation ${isOpen ? "lotto-simulation--open" : ""}
@@ -239,9 +263,9 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 							</div>
 						</div>
 						<div className={`lotto-simulation__start-simulation-button ${chosenNumbersValid ? "lotto-simulation__start-simulation-button--open" : ""}`}
-							onClick={(e) => this.handleStartSimulationClick(e)}>
-							<p className="lotto-simulation__start-simulation-button-text">Start New</p>
-							<p className="lotto-simulation__start-simulation-button-text">Simulation</p>
+							onClick={(e) => this.handleInitiateSimulationClick(e)}>
+							<p className="lotto-simulation__simulation-button-text">Start New</p>
+							<p className="lotto-simulation__simulation-button-text">Simulation</p>
 						</div>
 					</div>
 					<div className={`lotto-simulation__during-simulation-container ${isSimulating ? "lotto-simulation__during-simulation-container--simulating" : ""}`}>
@@ -249,22 +273,40 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 							<div className="lotto-simulation__draws-main-container">
 								<div className="lotto-simulation__draw-row">
 									<p className="lotto-simulation__draw-id lotto-simulation__draw-id--title">Draw</p>
-									<p className="lotto-simulation__draw-numbers lotto-simulation__draw-numbers--title">Numbers</p>
+									<p className="lotto-simulation__draw-numbers lotto-simulation__draw-numbers-title">Numbers</p>
 									<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings--title">Winnings</p>
 								</div>
-								{lottoDraws.map((key, index) => {
+								{lottoDraws.map((draw, index) => {
 									return <div key={index} className="lotto-simulation__draw-row">
-										<p className="lotto-simulation__draw-id lotto-simulation__draw-id--title">{key.drawNumber}</p>
-										<p className="lotto-simulation__draw-numbers lotto-simulation__draw-numbers--title">{key.numbersDrawn}</p>
-										<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings--title">{key.winnings}</p>
+										<p className="lotto-simulation__draw-id lotto-simulation__draw-id">{draw.drawNumber}</p>
+										<div className="lotto-simulation__drawn-numbers-container">
+											{draw.numbersDrawn.map((drawnNumber, index) => {
+												let match = false;
+												if (lottoNumbersChosen.indexOf(drawnNumber) > 0) match = true;
+												return <p key={index} className={`lotto-simulation__drawn-number ${match ? "lotto-simulation__drawn-number--match" : ""}`}>{drawnNumber}</p>;
+											})}
+										</div>
+										<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings">{draw.winnings ? "£" + draw.winnings.toFixed(2) : ""}</p>
 									</div>;
 								})}
+								<p>Days: {lottoSimulationHistory.days}</p>
+								<p>Months: {lottoSimulationHistory.months}</p>
+								<p>Years: {lottoSimulationHistory.years}</p>
+								<p>Draws: {lottoSimulationHistory.draws}</p>
+								<p>Won: £{lottoSimulationHistory.won.toFixed(2)}</p>
+								<p>Spent: £{lottoSimulationHistory.spent.toFixed(2)}</p>
+								<p>Profit: £{(lottoSimulationHistory.won - lottoSimulationHistory.spent).toFixed(2)}</p>
 							</div>
 						</div>
-						<div className={`lotto-simulation__start-simulation-button ${chosenNumbersValid ? "lotto-simulation__start-simulation-button--open" : ""}`}
+						<div className={`lotto-simulation__pause-simulation-button ${chosenNumbersValid ? "lotto-simulation__pause-simulation-button--open" : ""}`}
+							onClick={(e) => this.handlePauseSimulationClick(e)}>
+							<p className="lotto-simulation__simulation-button-text">{shouldAutoSimulate ? "Pause" : "Resume"}</p>
+							<p className="lotto-simulation__simulation-button-text">Simulation</p>
+						</div>
+						<div className={`lotto-simulation__end-simulation-button ${chosenNumbersValid ? "lotto-simulation__start-simulation-button--open" : ""}`}
 							onClick={(e) => this.handleEndSimulationClick(e)}>
-							<p className="lotto-simulation__start-simulation-button-text">Add</p>
-							<p className="lotto-simulation__start-simulation-button-text">Simulation</p>
+							<p className="lotto-simulation__simulation-button-text">End</p>
+							<p className="lotto-simulation__simulation-button-text">Simulation</p>
 						</div>
 					</div>
 				</div>

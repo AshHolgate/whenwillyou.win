@@ -40,10 +40,24 @@ export default class Simulations extends React.Component<SimulationsProps> {
 					onSelectedNumbersChange={(newNumbers: (number | null)[], areNumbersValid: boolean) => onLottoSelectedNumbersChange(newNumbers, areNumbersValid)}
 					updateSimulationStatus={(simulating: SimulationStatus) => onUpdateSimulationStatus(simulating)}
 					isSimulating={simulationStatus === 1}
-					isVisible={simulationStatus === 0 || simulationStatus === 1} 
+					isVisible={simulationStatus === 0 || simulationStatus === 1}
 					isOpen={isLottoSimulationOpen}
 					chosenNumbersValid={areLottoChosenNumbersValid}
-					/>
+				/>
+				<LottoSimulation
+					lottoNumbersChosen={lottoNumbersChosen}
+					lottoDraws={lottoDraws}
+					lottoKeyFacts={lottoKeyFacts}
+					lottoSimulationHistory={lottoSimulationHistory}
+					onUpdateDraws={(newDraws: Draw[]) => onUpdateLottoDraws(newDraws)}
+					handleOpenClick={(shouldBeOpen: boolean) => handleLottoOpenClick(shouldBeOpen)}
+					onSelectedNumbersChange={(newNumbers: (number | null)[], areNumbersValid: boolean) => onLottoSelectedNumbersChange(newNumbers, areNumbersValid)}
+					updateSimulationStatus={(simulating: SimulationStatus) => onUpdateSimulationStatus(simulating)}
+					isSimulating={simulationStatus === 1}
+					isVisible={simulationStatus === 0 || simulationStatus === 2}
+					isOpen={isLottoSimulationOpen}
+					chosenNumbersValid={areLottoChosenNumbersValid}
+				/>
 			</div>
 		);
 	}

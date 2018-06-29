@@ -9,6 +9,7 @@ export interface SimulationHistory {
 	years: number;
 	months: number;
 	days: number;
+	currentDrawDate: Date;
 	dayCycleCount: number;
 	spent: number;
 	won: number;
