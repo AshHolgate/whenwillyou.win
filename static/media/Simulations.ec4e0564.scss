@@ -1,0 +1,14 @@
+@import "../../Animations.scss";
+
+.simulations {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	opacity: 0;
+	animation-name: fadeInSlideFromLeft;
+	animation-delay: 0.3s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
