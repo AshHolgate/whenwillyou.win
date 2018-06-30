@@ -2,6 +2,7 @@ import * as React from "react";
 import Divider from "../shared/Divider";
 import LottoSimulation from "./LottoSimulation";
 import { Draw, SimulationHistory, SimulationStatus } from "../../models/Simulation";
+import EuromillionsSimulation from "./EuromillionsSimulation";
 require("./Simulations.scss");
 
 export interface SimulationsStoreProps {
@@ -44,6 +45,20 @@ export default class Simulations extends React.Component<SimulationsProps> {
 					isOpen={isLottoSimulationOpen}
 					chosenNumbersValid={areLottoChosenNumbersValid}
 				/>
+				{/* <EuromillionsSimulation
+					lottoNumbersChosen={lottoNumbersChosen}
+					lottoDraws={lottoDraws}
+					lottoKeyFacts={lottoKeyFacts}
+					lottoSimulationHistory={lottoSimulationHistory}
+					onUpdateDraws={(newDraws: Draw[]) => onUpdateLottoDraws(newDraws)}
+					handleOpenClick={(shouldBeOpen: boolean) => handleLottoOpenClick(shouldBeOpen)}
+					onSelectedNumbersChange={(newNumbers: (number | null)[], areNumbersValid: boolean) => onLottoSelectedNumbersChange(newNumbers, areNumbersValid)}
+					updateSimulationStatus={(simulating: SimulationStatus) => onUpdateSimulationStatus(simulating)}
+					isSimulating={simulationStatus === 1}
+					isVisible={simulationStatus === 0 || simulationStatus === 2}
+					isOpen={isLottoSimulationOpen}
+					chosenNumbersValid={areLottoChosenNumbersValid}
+				/> */}
 			</div>
 		);
 	}

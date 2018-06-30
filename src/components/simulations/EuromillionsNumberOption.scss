@@ -1,0 +1,27 @@
+@import "../../brand.scss";
+@import "../../variables.scss";
+
+.euromillions-number-option {
+	border: none;
+	outline: none;
+	background: white;
+	border-radius: 50%;
+	width: 35px;
+	height: 35px;
+	text-align: center;
+	font-weight: 600;
+	font-size: 1.1em;
+	text-decoration: underline;
+	order: 100;
+	&--filled {
+		background: radial-gradient(farthest-corner at 10px 10px, #FFF100 10%, #AAA100);
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+		color: black;
+		
+	}
+	@media (min-width: $iPhone8) {
+		width: 40px;
+		height: 40px;
+		font-size: 1.2em;
+	}
+}
