@@ -110,8 +110,14 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	handleInitiateSimulationClick(e: React.MouseEvent<HTMLElement>) {
-		if (!this.props.chosenNumbersValid) return;
 		e.stopPropagation();
+		if (!this.props.chosenNumbersValid) return;
+		window.setTimeout(() => {
+			this.setState((prevState, props) => {
+				return { shouldAutoSimulate: true };
+			});
+		}, 500);
+
 		this.props.updateSimulationStatus(1);
 		let sortedNumbers = this.props.lottoNumbersChosen.sort(function (a: number, b: number) { return a - b; });
 		this.updateChosenNumbers(sortedNumbers);
@@ -119,7 +125,16 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 
 	handleEndSimulationClick(e: React.MouseEvent<HTMLElement>) {
 		e.stopPropagation();
+		this.setState((prevState, props) => {
+			return { shouldAutoSimulate: false };
+		});
 		this.props.updateSimulationStatus(0);
+		let blankDraws = [{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null }];
+		this.props.onUpdateDraws(blankDraws);
 	}
 
 	draw() {
@@ -140,8 +155,13 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	calculateMatches(simulation: number[]) {
 		let numberOfMatches = 0;
 		for (let i = 0; i < 6; i++) {
-			if (this.props.lottoNumbersChosen.indexOf(simulation[i]) + 1) {
+			if (this.props.lottoNumbersChosen.indexOf(simulation[i]) >= 0) {
 				numberOfMatches++;
+			}
+		}
+		if (numberOfMatches === 5) {
+			if (this.props.lottoNumbersChosen.indexOf(simulation[6]) >= 0) {
+				numberOfMatches = 5.1;
 			}
 		}
 		return numberOfMatches;
@@ -158,13 +178,16 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 			return 25;
 		}
 		if (matches === 4) {
-			return 123;
+			return 140;
 		}
 		if (matches === 5) {
-			return 1457;
+			return 1455;
+		}
+		if (matches === 5.1) {
+			return 35942;
 		}
 		if (matches === 6) {
-			return 22000000;
+			return 5057464;
 		}
 		return 0;
 	}
@@ -192,7 +215,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	componentDidMount() {
 		window.setInterval(() => {
 			if (this.state.shouldAutoSimulate) this.draw();
-		}, 1);
+		}, 16.6667);
 	}
 
 	render() {
@@ -282,20 +305,58 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 										<div className="lotto-simulation__drawn-numbers-container">
 											{draw.numbersDrawn.map((drawnNumber, index) => {
 												let match = false;
-												if (lottoNumbersChosen.indexOf(drawnNumber) > 0) match = true;
-												return <p key={index} className={`lotto-simulation__drawn-number ${match ? "lotto-simulation__drawn-number--match" : ""}`}>{drawnNumber}</p>;
+												if (lottoNumbersChosen.indexOf(drawnNumber) >= 0) match = true;
+												return <p key={index} className={`lotto-simulation__drawn-number ${match ? "lotto-simulation__drawn-number--match" : ""}
+													${index === 6 ? "lotto-simulation__drawn-number--bonus" : ""}`}>{drawnNumber}</p>;
 											})}
 										</div>
 										<p className="lotto-simulation__draw-winnings lotto-simulation__draw-winnings">{draw.winnings ? "£" + draw.winnings.toFixed(2) : ""}</p>
 									</div>;
 								})}
-								<p>Days: {lottoSimulationHistory.days}</p>
-								<p>Months: {lottoSimulationHistory.months}</p>
-								<p>Years: {lottoSimulationHistory.years}</p>
-								<p>Draws: {lottoSimulationHistory.draws}</p>
-								<p>Won: £{lottoSimulationHistory.won.toFixed(2)}</p>
-								<p>Spent: £{lottoSimulationHistory.spent.toFixed(2)}</p>
-								<p>Profit: £{(lottoSimulationHistory.won - lottoSimulationHistory.spent).toFixed(2)}</p>
+							</div>
+							<div className="lotto-simulation__simulation-information-container">
+								<div className="lotto-simulation__simulation-information-row">
+									<div className="lotto-simulation__simulation-information-top-container">
+										<p className="lotto-simulation__simulation-information-top-title lotto-simulation__simulation-information-top-title--draws">Draws</p>
+										<div className="lotto-simulation__simulation-information-top-data-container lotto-simulation__simulation-information-top-data-container--draws">
+											<p className="lotto-simulation__simulation-information-top-data">{lottoSimulationHistory.draws}</p>
+										</div>
+									</div>
+									<div className="lotto-simulation__simulation-information-top-container">
+										<p className="lotto-simulation__simulation-information-top-title lotto-simulation__simulation-information-top-title--day">Day</p>
+										<div className="lotto-simulation__simulation-information-top-data-container lotto-simulation__simulation-information-top-data-container--day">
+											<p className="lotto-simulation__simulation-information-top-data">{lottoSimulationHistory.day}</p>
+										</div>
+									</div>
+									<div className="lotto-simulation__simulation-information-top-container">
+										<p className="lotto-simulation__simulation-information-top-title lotto-simulation__simulation-information-top-title--month">Month</p>
+										<div className="lotto-simulation__simulation-information-top-data-container lotto-simulation__simulation-information-top-data-container--month">
+											<p className="lotto-simulation__simulation-information-top-data">{lottoSimulationHistory.month}</p>
+										</div>
+									</div>
+									<div className="lotto-simulation__simulation-information-top-container">
+										<p className="lotto-simulation__simulation-information-top-title lotto-simulation__simulation-information-top-title--year">Year</p>
+										<div className="lotto-simulation__simulation-information-top-data-container lotto-simulation__simulation-information-top-data-container--year">
+											<p className="lotto-simulation__simulation-information-top-data">{lottoSimulationHistory.year}</p>
+										</div>
+									</div>
+								</div>
+								<div className="lotto-simulation__simulation-information-row">
+									<div className="lotto-simulation__simulation-information-bottom-container lotto-simulation__simulation-information-bottom-container--spent">
+										<p className="lotto-simulation__simulation-information-bottom-title">Spent</p>
+										<p className="lotto-simulation__simulation-information-bottom-data">£{lottoSimulationHistory.spent.toFixed(2)}</p>
+									</div>
+									<div className="lotto-simulation__simulation-information-bottom-container lotto-simulation__simulation-information-bottom-container--won">
+										<p className="lotto-simulation__simulation-information-bottom-title">Won</p>
+										<p className="lotto-simulation__simulation-information-bottom-data">£{lottoSimulationHistory.won.toFixed(2)}</p>
+									</div>
+								</div>
+								<div className="lotto-simulation__simulation-information-row">
+									<div className="lotto-simulation__simulation-information-bottom-container lotto-simulation__simulation-information-bottom-container--balance">
+										<p className="lotto-simulation__simulation-information-bottom-title">Balance</p>
+										<p className="lotto-simulation__simulation-information-bottom-data">£{(lottoSimulationHistory.won - lottoSimulationHistory.spent).toFixed(2)}</p>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className={`lotto-simulation__pause-simulation-button ${chosenNumbersValid ? "lotto-simulation__pause-simulation-button--open" : ""}`}

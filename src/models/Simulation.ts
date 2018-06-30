@@ -6,9 +6,9 @@ export interface Draw {
 
 export interface SimulationHistory {
 	draws: number;
-	years: number;
-	months: number;
-	days: number;
+	year: number;
+	month: number;
+	day: number;
 	currentDrawDate: Date;
 	dayCycleCount: number;
 	spent: number;

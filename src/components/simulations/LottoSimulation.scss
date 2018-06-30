@@ -1,4 +1,5 @@
 @import "../../brand.scss";
+@import "../../variables.scss";
 
 .lotto-simulation {
 	padding: 5px 0;
@@ -7,18 +8,26 @@
 	flex-direction: column;
 	align-items: center;
 	border-radius: 10px;
-	transition: 1s;
+	transition: 0.5s;
 	height: 51px;
 	margin: 5px 0;
 	overflow: hidden;
 	position: relative;
+	width: 100%;
+	max-width: 420px;
 	&--open {
 		background: red;
 		height: 310px;
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+		@media (min-width: $iPhone8) {
+			height: 320px;
+		}
 	}
 	&--simulating {
-		height: 550px;
+		height: 436px;
+		@media (min-width: $iPhone8) {
+			height: 446px;
+		}
 	}
 	&--hidden {
 		height: 0px;
@@ -31,7 +40,7 @@
 		font-weight: 700;
 		margin: 10px 0;
 		text-transform: uppercase;
-		transition: 1s;
+		transition: 0.5s;
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
@@ -52,7 +61,7 @@
 		width: calc(100% - 20px);
 		min-height: 19px;
 		height: 0px;
-		transition: 1s;
+		transition: 0.5s;
 		opacity: 0;
 		margin: 40px 0 5px;
 		&--open {
@@ -69,29 +78,32 @@
 	&__simulation-numbers-container {
 		position: relative;
 		width: calc(100% - 20px);
-		min-height: 52px;
-		transition: 1s;
+		min-height: 42px;
+		transition: 0.5s;
 		opacity: 0;
 		&--open {
 			opacity: 1;
+		}
+		@media (min-width: $iPhone8) {
+			min-height: 52px;
 		}
 	}
 	&__main-container {
 		position: relative;
 		width: calc(100% - 20px);
-		min-height: 200px;
-		transition: 1s;
+		min-height: 210px;
+		transition: 0.5s;
 		opacity: 0;
 		&--open {
 			opacity: 1;
 		}
 		&--simulating {
-			min-height: 492px;
+			min-height: 390px;
 		}
 	}
 	&__pre-simulation-container {
 		width: 100%;
-		transition: 1s;
+		transition: 0.5s;
 		opacity: 1;
 		position: absolute;
 		top: 0;
@@ -103,7 +115,7 @@
 	}
 	&__during-simulation-container {
 		width: 100%;
-		transition: 1s;
+		transition: 0.5s;
 		opacity: 0;
 		pointer-events: none;
 		position: absolute;
@@ -117,7 +129,7 @@
 	&__sub-title-container {
 		margin: 0;
 		width: 100%;
-		transition: 1s;
+		transition: 0.5s;
 		display: flex;
 		justify-content: flex-start;
 	}
@@ -146,16 +158,19 @@
 	}
 	
 	&__numbers-container {
-		min-height: 52px;
+		min-height: 42px;
 		width: 100%;
-		transition: 1s;
+		transition: 0.5s;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		@media (min-width: $iPhone8) {
+			min-height: 52px;
+		}
 	}
 	&__data-organisation-container {
 		width: 100%;
-		transition: 1s;
+		transition: 0.5s;
 		display: flex;
 		justify-content: space-between;
 	}
@@ -201,9 +216,12 @@
 		padding: 2px 5px;
 		color: #666;
 		height: 19px;
-		font-size: 0.75em;
+		font-size: 0.625em;
 		&:nth-child(even) {
 			background: #f4f4f4;	
+		}
+		@media (min-width: $iPhone8) {
+			font-size: 0.7em;
 		}
 	}
 	&__draw-id {
@@ -211,6 +229,9 @@
 		width: 40px;
 		&--title {
 			color: #222
+		}
+		@media (min-width: $iPhone8) {
+			width: 45px;
 		}
 	}
 	&__draw-numbers {
@@ -225,18 +246,138 @@
 	}
 	&__drawn-number {
 		margin: 0 5px 0 0;
+		width: 12px;
+		opacity: 0.5;
 		&--match {
 			color: #222;
 			font-weight: 700;
 			text-decoration: underline;
+			opacity: 1 !important;
+		}
+		&--bonus {
+			margin-left: 5px;
+		}
+		@media (min-width: $iPhone8) {
+			width: 15px;
 		}
 	}
 	&__draw-winnings {
 		margin: 0;
-		width: 100px;
+		width: 60px;
+		font-weight: 700;
+		color: black;
 		&--title {
-			color: #222
+			color: #222;
+			font-weight: unset;
 		}
+		@media (min-width: $iPhone8) {
+			width: 80px;
+		}
+	}
+	&__simulation-information-container {
+		margin-top: 10px;
+	}
+	&__simulation-information-row {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__simulation-information-top-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: calc(25% - 10px);
+		max-width: 75px;
+	}
+	&__simulation-information-top-title {
+		text-transform: uppercase;
+		color: white;
+		font-size: 0.6em;
+		padding: 4px 8px;
+		margin: 0 0 -10px;
+		z-index: 1;
+		&--draws {
+			border-top-right-radius: 6px;
+			background: black;
+		}
+		&--day {
+			border-top-right-radius: 6px;
+			background: #B40000;
+		}
+		&--month {
+			border-top-left-radius: 6px;
+			background: #B40000;
+		}
+		&--year {
+			border-top-left-radius: 6px;
+			background: #B40000;
+		}
+	}
+	&__simulation-information-top-data-container {
+		text-transform: uppercase;
+		font-weight: 700;
+		color: black;
+		background: white;
+		font-size: 1.1em;
+		width: 100%;
+		display: flex;
+		align-items:center;
+		justify-content: center;
+		margin: 0;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+		&--draws {
+			border-bottom-right-radius: 10px;
+		}
+		&--day {
+			border-bottom-right-radius: 10px;
+		}
+		&--month {
+			border-bottom-left-radius: 10px;
+		}
+		&--year {
+			border-bottom-left-radius: 10px;
+		}
+	}
+	&__simulation-information-top-data {
+		margin: 9px 0 2px;
+	}
+	&__simulation-information-bottom-container {
+		background: white;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin: 10px 0 0;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+		&--spent {
+			width: 50%;
+			border-bottom-right-radius: 100px;
+			padding: 5px 0 2px 10px;
+		}
+		&--won {
+			width: 50%;
+			border-top-left-radius: 100px;
+			text-align: right;
+			padding: 5px 10px 2px 0;
+		}
+		&--balance {
+			width: 100%;
+			border-top-right-radius: 100px;
+			border-bottom-left-radius: 100px;
+			text-align: center;
+			padding: 5px 0 2px 0;
+		}
+	}
+	&__simulation-information-bottom-title {
+		text-transform: uppercase;
+		color: black;
+		opacity: 0.5;
+		font-size: 0.8em;
+		margin: 0;
+	}
+	&__simulation-information-bottom-data {
+		color: black;
+		font-size: 1.1em;
+		font-weight: 700;
+		margin: -2px 0 0;
 	}
 	&__pause-simulation-button {
 		padding: 5px;
@@ -250,9 +391,9 @@
 		cursor: pointer;
 		width: calc(100% + 10px);
 		position: absolute;
-		bottom: 45px;
+		bottom: 42px;
 		left: -10px;
-		transition: 1s;
+		transition: 0.5s;
 	}
 	&__start-simulation-button {
 		padding: 5px;
@@ -267,7 +408,7 @@
 		position: absolute;
 		bottom: 0px;
 		left: -10px;
-		transition: 1s;
+		transition: 0.5s;
 		&--open {
 			opacity: 1;
 			cursor: pointer;
@@ -287,7 +428,7 @@
 		position: absolute;
 		bottom: 0px;
 		left: -10px;
-		transition: 1s;
+		transition: 0.5s;
 	}
 	&__simulation-button-text {
 		user-select: none;

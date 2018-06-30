@@ -29,13 +29,17 @@ const initialState: SimulationsReducerState = {
 		{ drawNumber: null, numbersDrawn: [], winnings: null }
 	],
 	lottoKeyFacts: [],
-	lottoSimulationHistory: { draws: 0, currentDrawDate: new Date(), days: 0, months: 0, years: 0, dayCycleCount: 3, spent: 0, won: 0 },
+	lottoSimulationHistory: { draws: 0, currentDrawDate: new Date(), day: 0, month: 0, year: 0, dayCycleCount: 3, spent: 0, won: 0 },
 	simulationStatus: SimulationStatus.notSimulating,
 	isLottoSimulationOpen: false,
 	areLottoChosenNumbersValid: false
 };
 
 const calculateHistory = (draws: Draw[], history: SimulationHistory) => {
+	if (draws[0].drawNumber === null) {
+		let blankHistory = { draws: 0, currentDrawDate: new Date(), day: 0, month: 0, year: 0, dayCycleCount: 3, spent: 0, won: 0 };
+		return blankHistory;
+	}
 	history = Object.assign({}, history);
 	let currentDraw = draws[0];
 	history.spent += 2.5;
@@ -44,9 +48,9 @@ const calculateHistory = (draws: Draw[], history: SimulationHistory) => {
 	let now = new Date();
 	let difference = (history.currentDrawDate as any) - (now as any);
 	let elapsedDate = new Date(difference);
-	history.days = elapsedDate.getDate();
-	history.months = elapsedDate.getMonth() + 1;
-	history.years = elapsedDate.getFullYear() - 1970;
+	history.day = elapsedDate.getDate();
+	history.month = elapsedDate.getMonth() + 1;
+	history.year = elapsedDate.getFullYear() - 1970;
 	history.dayCycleCount = history.dayCycleCount === 3 ? 4 : 3;
 	history.draws += 1;
 	return history;

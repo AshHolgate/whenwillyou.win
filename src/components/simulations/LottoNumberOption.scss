@@ -1,15 +1,16 @@
 @import "../../brand.scss";
+@import "../../variables.scss";
 
 .lotto-number-option {
 	border: none;
 	outline: none;
 	background: white;
 	border-radius: 50%;
-	width: 40px;
-	height: 40px;
+	width: 35px;
+	height: 35px;
 	text-align: center;
 	font-weight: 600;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	text-decoration: underline;
 	order: 100;
 	&--filled {
@@ -17,5 +18,10 @@
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 		color: white;
 		
+	}
+	@media (min-width: $iPhone8) {
+		width: 40px;
+		height: 40px;
+		font-size: 1.2em;
 	}
 }
