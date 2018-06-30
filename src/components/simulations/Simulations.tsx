@@ -2,7 +2,7 @@ import * as React from "react";
 import Divider from "../shared/Divider";
 import LottoSimulation from "./LottoSimulation";
 import { Draw, SimulationHistory, SimulationStatus } from "../../models/Simulation";
-import EuromillionsSimulation from "./EuromillionsSimulation";
+// import EuromillionsSimulation from "./EuromillionsSimulation";
 require("./Simulations.scss");
 
 export interface SimulationsStoreProps {
