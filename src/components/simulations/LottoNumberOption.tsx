@@ -35,7 +35,7 @@ export default class LottoNumberOption extends React.Component<LottoNumberOption
 
 		return (
 			<input className={`lotto-number-option ${value ? "lotto-number-option--filled" : ""}`} onClick={(e) => this.handleClick(e)} value={value || ""}
-				onChange={e => this.handleNumericChange(e.target.value)} type="string" pattern="\d*" disabled={disabled}/>
+				onChange={e => this.handleNumericChange(e.target.value)} type="string" pattern="pattern='[0-9]'" disabled={disabled}/>
 		);
 	}
 }
