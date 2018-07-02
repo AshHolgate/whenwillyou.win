@@ -2,7 +2,7 @@
 	"name": "whenwillyou.win",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "https://ashholgate.github.io/whenwillyou.win",
+	"homepage": "https://ashholgate.github.io/whenwillyou.win/",
 	"dependencies": {
 		"@types/react-redux": "^6.0.0",
 		"@types/react-router-dom": "^4.2.7",
