@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./App.scss";
+require("./App.scss");
 import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
 import Routes from "./components/Routes";
