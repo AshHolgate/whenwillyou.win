@@ -189,11 +189,6 @@ module.exports = {
 										},
 										{
 											loader: require.resolve('sass-loader'),
-											options: {
-												importLoaders: 1,
-												minimize: true,
-												sourceMap: shouldUseSourceMap,
-											},
 										},
 										{
 											loader: require.resolve('postcss-loader'),
