@@ -212,10 +212,11 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		});
 	}
 
-	componentDidMount() {
-		window.setInterval(() => {
+	componentDidUpdate() {
+		window.requestAnimationFrame(() => {
 			if (this.state.shouldAutoSimulate) this.draw();
-		}, 100);
+		});
+		
 	}
 
 	render() {
