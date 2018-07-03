@@ -34,7 +34,7 @@ export default class EuromillionsNumberOption extends React.Component<Euromillio
 		let { value, disabled } = this.props;
 
 		return (
-			<input className={`lotto-number-option ${value ? "lotto-number-option--filled" : ""}`} onClick={(e) => this.handleClick(e)} value={value || ""}
+			<input className={`euromillions-number-option ${value ? "euromillions-number-option--filled" : ""}`} onClick={(e) => this.handleClick(e)} value={value || ""}
 				onChange={e => this.handleNumericChange(e.target.value)} type="string" pattern="pattern='[0-9]'" disabled={disabled}/>
 		);
 	}

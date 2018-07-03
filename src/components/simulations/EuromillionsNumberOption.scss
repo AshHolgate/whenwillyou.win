@@ -14,9 +14,8 @@
 	text-decoration: underline;
 	padding: 0;
 	&--filled {
-		background: radial-gradient(farthest-corner at 10px 10px, red, darkred);
+		background: radial-gradient(farthest-corner at 10px 10px, $EuromillionsYellow 10%, darken($EuromillionsYellow, 15%));
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
-		color: white;
 		
 	}
 	@media (min-width: $iPhone8) {

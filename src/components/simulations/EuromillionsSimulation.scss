@@ -2,7 +2,6 @@
 @import "../../variables.scss";
 
 .euromillions-simulation {
-	cursor: pointer;
 	padding: 5px 0;
 	background: #DDDDDD;
 	display: flex;
@@ -18,9 +17,10 @@
 	max-width: 420px;
 	@media (min-width: $Tablet) {
 		height: 56px;
+		cursor: pointer;
 	}
 	&--open {
-		background: red;
+		background: $EuromillionsYellow;
 		height: 310px;
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 		@media (min-width: $iPhone8) {
@@ -56,7 +56,6 @@
 		transform: translateX(-50%);
 		user-select: none;
 		&--open {
-			color: white;
 			left: 0%;
 			margin: 0;
 			transform: translateX(9px);
@@ -165,7 +164,6 @@
 	&__sub-title {
 		margin: 0 auto 0 0;
 		font-weight: 700;
-		color: white;
 		user-select: none;
 		@media (min-width: $Tablet) {
 			font-size: 1.1em;
@@ -182,8 +180,8 @@
 		border-radius: 10px;
 		margin: 0 0 0 5px;
 		font-weight: 700;
-		color: red;
-		background: rgba(255,255,255,0.75);
+		color: $EuromillionsYellow;
+		background: rgba(0,0,0,0.75);
 		outline: none;
 		border: none;
 		user-select: none;
@@ -213,7 +211,6 @@
 		justify-content: space-between;
 	}
 	&__description-container {
-		color: white;
 		width: 50%;
 	}
 	&__description-container-title {
@@ -233,7 +230,6 @@
 		}
 	}
 	&__winnings-container {
-		color: white;
 		width: 50%;
 		text-align: right;
 	}
@@ -437,7 +433,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background: #CB0000;
+		background: #CBC000;
 		color: white;
 		opacity: 1;
 		cursor: pointer;
@@ -453,7 +449,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background: #CB0000;
+		background: #CBC000;
 		color: white;
 		opacity: 0.4;
 		width: calc(100% + 10px);
@@ -472,7 +468,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background: #CB0000;
+		background: #CBC000;
 		color: white;
 		opacity: 1;
 		cursor: pointer;

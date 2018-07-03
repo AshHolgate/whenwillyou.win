@@ -73,32 +73,31 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 	}
 
 	generateLuckyDip() {
-		let newLuckyDip = [];
-		for (let i = 0; i < 6; i++) {
-			let newNumber = Math.floor((Math.random() * 60) + 1);
-			if (newLuckyDip.indexOf(newNumber) === -1) {
-				newLuckyDip.push(newNumber);
-			} else {
-				i--;
-			}
-		}
-		newLuckyDip.sort(function (a: number, b: number) { return a - b; });
-		return newLuckyDip;
+		return this.generateNewDraw();
 	}
 
 	generateNewDraw() {
-		let newDraw = [];
-		for (let i = 0; i < 6; i++) {
-			let newNumber = Math.floor((Math.random() * 60) + 1);
-			if (newDraw.indexOf(newNumber) === -1) {
-				newDraw.push(newNumber);
+		let newMainNumbers = [];
+		let newStarNumbers = [];
+		for (let i = 0; i < 5; i++) {
+			let newNumber = Math.floor((Math.random() * 50) + 1);
+			if (newMainNumbers.indexOf(newNumber) === -1) {
+				newMainNumbers.push(newNumber);
 			} else {
 				i--;
 			}
 		}
-		newDraw.sort(function (a: number, b: number) { return a - b; });
-		let newBonusNumber = Math.floor((Math.random() * 60) + 1);
-		newDraw.push(newBonusNumber);
+		newMainNumbers.sort(function (a: number, b: number) { return a - b; });
+		for (let i = 0; i < 2; i++) {
+			let newNumber = Math.floor((Math.random() * 12) + 1);
+			if (newStarNumbers.indexOf(newNumber) === -1) {
+				newStarNumbers.push(newNumber);
+			} else {
+				i--;
+			}
+		}
+		newStarNumbers.sort(function (a: number, b: number) { return a - b; });
+		let newDraw = newMainNumbers.concat(newStarNumbers);
 		return newDraw;
 	}
 

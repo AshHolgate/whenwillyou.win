@@ -26,7 +26,7 @@ export interface SimulationsDispatchProps {
 	handleLottoOpenClick: (lottoShouldBeOpen: boolean) => void;
 	onUpdateLottoDraws: (newDraws: Draw[]) => void;
 	onEuromillionsSelectedNumbersChange: (newNumbers: (number | null)[], areNumbersValid: boolean) => void;
-	handleEuromillionsOpenClick: (lottoShouldBeOpen: boolean) => void;
+	handleEuromillionsOpenClick: (euromillionsShouldBeOpen: boolean) => void;
 	onUpdateEuromillionsDraws: (newDraws: Draw[]) => void;
 	onUpdateSimulationStatus: (simulationStatus: SimulationStatus) => void;
 }
@@ -65,7 +65,7 @@ export default class Simulations extends React.Component<SimulationsProps> {
 					handleOpenClick={(shouldBeOpen: boolean) => handleEuromillionsOpenClick(shouldBeOpen)}
 					onSelectedNumbersChange={(newNumbers: (number | null)[], areNumbersValid: boolean) => onEuromillionsSelectedNumbersChange(newNumbers, areNumbersValid)}
 					updateSimulationStatus={(simulating: SimulationStatus) => onUpdateSimulationStatus(simulating)}
-					isSimulating={simulationStatus === 1}
+					isSimulating={simulationStatus === 2}
 					isVisible={simulationStatus === 0 || simulationStatus === 2}
 					isOpen={isEuromillionsSimulationOpen}
 					chosenNumbersValid={areEuromillionsChosenNumbersValid}

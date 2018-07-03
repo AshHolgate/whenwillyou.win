@@ -1,6 +1,7 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import { Draw, SimulationHistory, SimulationStatus } from "../../models/Simulation";
-import { changeLottoSelectedNumberAction, onUpdateLottoDrawsAction, onUpdateSimulationStatusAction, onLottoOpenAction } from "./actions";
+import { changeLottoSelectedNumberAction, onUpdateLottoDrawsAction, onUpdateSimulationStatusAction, onLottoOpenAction, onUpdateEuromillionsDrawsAction,
+	changeEuromillionsSelectedNumberAction, onEuromillionsOpenAction } from "./actions";
 
 export interface SimulationsReducerState {
 	lottoNumbersChosen: (number | null)[];
@@ -86,6 +87,10 @@ const reducer = reducerWithInitialState(initialState)
 	.case(onLottoOpenAction, (state, payload) => ({ ...state, isLottoSimulationOpen: payload.value }))
 	.case(changeLottoSelectedNumberAction, (state, payload) => ({ ...state, lottoNumbersChosen: payload.value, areLottoChosenNumbersValid: payload.areNumbersValid }))
 	.case(onUpdateLottoDrawsAction, (state, payload) => ({ ...state, lottoDraws: payload.draws, lottoSimulationHistory: calculateHistory(payload.draws, state.lottoSimulationHistory)}))
+	.case(onEuromillionsOpenAction, (state, payload) => ({ ...state, isEuromillionsSimulationOpen: payload.value }))
+	.case(changeEuromillionsSelectedNumberAction, (state, payload) => ({ ...state, euromillionsNumbersChosen: payload.value, areEuromillionsChosenNumbersValid: payload.areNumbersValid }))
+	.case(onUpdateEuromillionsDrawsAction, (state, payload) => ({ ...state, euromillionsDraws: payload.draws,
+		euromillionsSimulationHistory: calculateHistory(payload.draws, state.euromillionsSimulationHistory)}))
 	.case(onUpdateSimulationStatusAction, (state, payload) => ({ ...state, simulationStatus: payload.value }));
 
 export default reducer;
