@@ -1,4 +1,5 @@
 @import "../../Animations.scss";
+@import "../../variables.scss";
 
 .header {
 	width: 100%;
@@ -7,14 +8,27 @@
 	height: 40px;
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
 	z-index: 10;
 	font-family: Cabin, sans-serif;
+	@media (min-width: $Tablet) {
+		height: 45px;
+	}
+	&__title-organisation-container {
+		cursor: pointer;
+		height: 100%;
+		width: calc(100% - 40px);
+		max-width: 422px;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+	}
 	&__title-container {
 		cursor: pointer;
 		height: 100%;
-		margin-left: 20px;
+		width: unset;
 		background: black;
 		display: flex;
 		flex-direction: row;
@@ -39,6 +53,9 @@
 		animation-name: fadeInScale;
 		animation-duration: 1s;
 		animation-fill-mode: forwards;
+		@media (min-width: $Tablet) {
+			font-size: 1.8em;
+		}
 	}
 	&__1 {
 		animation-delay: 0.3s;

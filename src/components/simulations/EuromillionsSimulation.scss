@@ -2,6 +2,7 @@
 @import "../../variables.scss";
 
 .euromillions-simulation {
+	cursor: pointer;
 	padding: 5px 0;
 	background: #DDDDDD;
 	display: flex;
@@ -15,18 +16,27 @@
 	position: relative;
 	width: 100%;
 	max-width: 420px;
+	@media (min-width: $Tablet) {
+		height: 56px;
+	}
 	&--open {
-		background: #FFF100;
+		background: red;
 		height: 310px;
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 		@media (min-width: $iPhone8) {
 			height: 320px;
+		}
+		@media (min-width: $Tablet) {
+			height: 330px;
 		}
 	}
 	&--simulating {
 		height: 436px;
 		@media (min-width: $iPhone8) {
 			height: 446px;
+		}
+		@media (min-width: $Tablet) {
+			height: 454px;
 		}
 	}
 	&--hidden {
@@ -46,6 +56,7 @@
 		transform: translateX(-50%);
 		user-select: none;
 		&--open {
+			color: white;
 			left: 0%;
 			margin: 0;
 			transform: translateX(9px);
@@ -53,6 +64,9 @@
 		&--hidden {
 			transform: translateX(9px) translateY(-25px);
 			opacity: 0;
+		}
+		@media (min-width: $Tablet) {
+			font-size: 1.8em;
 		}
 	}
 	&__simulation-options-container {
@@ -73,6 +87,19 @@
 			margin: 0;
 			min-height: 0;
 		}
+		@media (min-width: $Tablet) {
+			margin: 44px 0 5px;
+			&--open {
+				opacity: 1;
+				margin: 34px 0 5px;
+			}
+			&--hidden {
+				height: 0;
+				opacity: 0;
+				margin: 0;
+				min-height: 0;
+			}
+		}
 	}
 	&__simulation-numbers-container {
 		position: relative;
@@ -85,6 +112,9 @@
 		}
 		@media (min-width: $iPhone8) {
 			min-height: 52px;
+		}
+		@media (min-width: $Tablet) {
+			min-height: 60px;
 		}
 	}
 	&__main-container {
@@ -137,6 +167,9 @@
 		font-weight: 700;
 		color: white;
 		user-select: none;
+		@media (min-width: $Tablet) {
+			font-size: 1.1em;
+		}
 	}
 	&__lucky-dip-button {
 		font-family: $MainFont;
@@ -154,6 +187,9 @@
 		outline: none;
 		border: none;
 		user-select: none;
+		@media (min-width: $Tablet) {
+			font-size: 0.9em;
+		}
 	}
 	
 	&__numbers-container {
@@ -165,6 +201,9 @@
 		align-items: center;
 		@media (min-width: $iPhone8) {
 			min-height: 52px;
+		}
+		@media (min-width: $Tablet) {
+			min-height: 60px;
 		}
 	}
 	&__data-organisation-container {
@@ -180,11 +219,18 @@
 	&__description-container-title {
 		font-weight: 700;
 		margin: 0 0 5px;
+		@media (min-width: $Tablet) {
+			font-size: 1.2em;
+		}
 	}
 	&__description-container-content {
 		margin: 0 0 5px;
 		font-size: 0.8em;
 		line-height: 16px;
+		@media (min-width: $Tablet) {
+			font-size: 0.9em;
+			line-height: 18px;
+		}
 	}
 	&__winnings-container {
 		color: white;
@@ -194,11 +240,18 @@
 	&__winnings-container-title {
 		font-weight: 700;
 		margin: 0 0 5px;
+		@media (min-width: $Tablet) {
+			font-size: 1.2em;
+		}
 	}
 	&__winnings-container-content {
 		margin: 0 0 5px;
 		font-size: 0.8em;
 		line-height: 16px;
+		@media (min-width: $Tablet) {
+			font-size: 0.9em;
+			line-height: 18px;
+		}
 	}
 	&__simulation-draws-container {
 		width: 100%;

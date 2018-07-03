@@ -4,10 +4,10 @@ import { Draw, SimulationStatus, SimulationHistory } from "../../models/Simulati
 require("./EuromillionsSimulation.scss");
 
 export interface EuromillionsSimulationDataProps {
-	lottoNumbersChosen: (number | null)[];
-	lottoDraws: Draw[];
-	lottoKeyFacts: string[];
-	lottoSimulationHistory: SimulationHistory;
+	euromillionsNumbersChosen: (number | null)[];
+	euromillionsDraws: Draw[];
+	euromillionsKeyFacts: string[];
+	euromillionsSimulationHistory: SimulationHistory;
 	isSimulating: boolean;
 	isVisible: boolean;
 	isOpen: boolean;
@@ -119,7 +119,7 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 		}, 500);
 
 		this.props.updateSimulationStatus(1);
-		let sortedNumbers = this.props.lottoNumbersChosen.sort(function (a: number, b: number) { return a - b; });
+		let sortedNumbers = this.props.euromillionsNumbersChosen.sort(function (a: number, b: number) { return a - b; });
 		this.updateChosenNumbers(sortedNumbers);
 	}
 
@@ -143,24 +143,24 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 	}
 
 	calculateNewDraws() {
-		let currentDraws = this.props.lottoDraws.slice();
+		let currentDraws = this.props.euromillionsDraws.slice();
 		currentDraws.pop();
 		let newDrawNumbers = this.generateNewDraw();
 		let newDrawMatches = this.calculateMatches(newDrawNumbers);
 		let newDrawWinnings = this.calculateWinnings(newDrawMatches);
-		currentDraws.unshift({ drawNumber: this.props.lottoSimulationHistory.draws + 1, numbersDrawn: newDrawNumbers, winnings: newDrawWinnings });
+		currentDraws.unshift({ drawNumber: this.props.euromillionsSimulationHistory.draws + 1, numbersDrawn: newDrawNumbers, winnings: newDrawWinnings });
 		return currentDraws;
 	}
 
 	calculateMatches(simulation: number[]) {
 		let numberOfMatches = 0;
 		for (let i = 0; i < 6; i++) {
-			if (this.props.lottoNumbersChosen.indexOf(simulation[i]) >= 0) {
+			if (this.props.euromillionsNumbersChosen.indexOf(simulation[i]) >= 0) {
 				numberOfMatches++;
 			}
 		}
 		if (numberOfMatches === 5) {
-			if (this.props.lottoNumbersChosen.indexOf(simulation[6]) >= 0) {
+			if (this.props.euromillionsNumbersChosen.indexOf(simulation[6]) >= 0) {
 				numberOfMatches = 5.1;
 			}
 		}
@@ -194,7 +194,7 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 
 	handleSelectedNumberChange(value: number | null, index: number) {
 		if (isNaN(value!)) value = null;
-		let newNumbers = this.props.lottoNumbersChosen.slice();
+		let newNumbers = this.props.euromillionsNumbersChosen.slice();
 		newNumbers[index] = value;
 		this.updateChosenNumbers(newNumbers);
 	}
@@ -212,14 +212,15 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 		});
 	}
 
-	componentDidMount() {
-		window.setInterval(() => {
+	componentDidUpdate() {
+		window.requestAnimationFrame(() => {
 			if (this.state.shouldAutoSimulate) this.draw();
-		}, 16.6667);
+		});
+		
 	}
 
 	render() {
-		let { lottoNumbersChosen, isVisible, isSimulating, lottoDraws, isOpen, chosenNumbersValid, lottoSimulationHistory } = this.props;
+		let { euromillionsNumbersChosen, isVisible, isSimulating, euromillionsDraws, isOpen, chosenNumbersValid, euromillionsSimulationHistory } = this.props;
 		let { shouldAutoSimulate } = this.state;
 		return (
 			<div
@@ -240,8 +241,8 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 				</div>
 				<div className={`euromillions-simulation__simulation-numbers-container ${isOpen ? "euromillions-simulation__simulation-numbers-container--open" : ""}`}>
 					<div className={`euromillions-simulation__numbers-container`}>
-						{lottoNumbersChosen.map((key, index) => {
-							return <EuromillionsNumberOption key={index} value={lottoNumbersChosen[index]} index={index}
+						{euromillionsNumbersChosen.map((key, index) => {
+							return <EuromillionsNumberOption key={index} value={euromillionsNumbersChosen[index]} index={index}
 								onChange={(value, index) => this.handleSelectedNumberChange(value, index)} disabled={isSimulating} />;
 						})}
 
@@ -300,13 +301,13 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 									<p className="euromillions-simulation__draw-numbers euromillions-simulation__draw-numbers-title">Numbers</p>
 									<p className="euromillions-simulation__draw-winnings euromillions-simulation__draw-winnings--title">Winnings</p>
 								</div>
-								{lottoDraws.map((draw, index) => {
+								{euromillionsDraws.map((draw, index) => {
 									return <div key={index} className="euromillions-simulation__draw-row">
 										<p className="euromillions-simulation__draw-id euromillions-simulation__draw-id">{draw.drawNumber}</p>
 										<div className="euromillions-simulation__drawn-numbers-container">
 											{draw.numbersDrawn.map((drawnNumber, index) => {
 												let match = false;
-												if (lottoNumbersChosen.indexOf(drawnNumber) >= 0) match = true;
+												if (euromillionsNumbersChosen.indexOf(drawnNumber) >= 0) match = true;
 												return <p key={index} className={`euromillions-simulation__drawn-number ${match ? "euromillions-simulation__drawn-number--match" : ""}
 													${index === 6 ? "euromillions-simulation__drawn-number--bonus" : ""}`}>{drawnNumber}</p>;
 											})}
@@ -320,42 +321,42 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 									<div className="euromillions-simulation__simulation-information-top-container">
 										<p className="euromillions-simulation__simulation-information-top-title euromillions-simulation__simulation-information-top-title--draws">Draws</p>
 										<div className="euromillions-simulation__simulation-information-top-data-container euromillions-simulation__simulation-information-top-data-container--draws">
-											<p className="euromillions-simulation__simulation-information-top-data">{lottoSimulationHistory.draws}</p>
+											<p className="euromillions-simulation__simulation-information-top-data">{euromillionsSimulationHistory.draws}</p>
 										</div>
 									</div>
 									<div className="euromillions-simulation__simulation-information-top-container">
 										<p className="euromillions-simulation__simulation-information-top-title euromillions-simulation__simulation-information-top-title--day">Day</p>
 										<div className="euromillions-simulation__simulation-information-top-data-container euromillions-simulation__simulation-information-top-data-container--day">
-											<p className="euromillions-simulation__simulation-information-top-data">{lottoSimulationHistory.day}</p>
+											<p className="euromillions-simulation__simulation-information-top-data">{euromillionsSimulationHistory.day}</p>
 										</div>
 									</div>
 									<div className="euromillions-simulation__simulation-information-top-container">
 										<p className="euromillions-simulation__simulation-information-top-title euromillions-simulation__simulation-information-top-title--month">Month</p>
 										<div className="euromillions-simulation__simulation-information-top-data-container euromillions-simulation__simulation-information-top-data-container--month">
-											<p className="euromillions-simulation__simulation-information-top-data">{lottoSimulationHistory.month}</p>
+											<p className="euromillions-simulation__simulation-information-top-data">{euromillionsSimulationHistory.month}</p>
 										</div>
 									</div>
 									<div className="euromillions-simulation__simulation-information-top-container">
 										<p className="euromillions-simulation__simulation-information-top-title euromillions-simulation__simulation-information-top-title--year">Year</p>
 										<div className="euromillions-simulation__simulation-information-top-data-container euromillions-simulation__simulation-information-top-data-container--year">
-											<p className="euromillions-simulation__simulation-information-top-data">{lottoSimulationHistory.year}</p>
+											<p className="euromillions-simulation__simulation-information-top-data">{euromillionsSimulationHistory.year}</p>
 										</div>
 									</div>
 								</div>
 								<div className="euromillions-simulation__simulation-information-row">
 									<div className="euromillions-simulation__simulation-information-bottom-container euromillions-simulation__simulation-information-bottom-container--spent">
 										<p className="euromillions-simulation__simulation-information-bottom-title">Spent</p>
-										<p className="euromillions-simulation__simulation-information-bottom-data">£{lottoSimulationHistory.spent.toFixed(2)}</p>
+										<p className="euromillions-simulation__simulation-information-bottom-data">£{euromillionsSimulationHistory.spent.toFixed(2)}</p>
 									</div>
 									<div className="euromillions-simulation__simulation-information-bottom-container euromillions-simulation__simulation-information-bottom-container--won">
 										<p className="euromillions-simulation__simulation-information-bottom-title">Won</p>
-										<p className="euromillions-simulation__simulation-information-bottom-data">£{lottoSimulationHistory.won.toFixed(2)}</p>
+										<p className="euromillions-simulation__simulation-information-bottom-data">£{euromillionsSimulationHistory.won.toFixed(2)}</p>
 									</div>
 								</div>
 								<div className="euromillions-simulation__simulation-information-row">
 									<div className="euromillions-simulation__simulation-information-bottom-container euromillions-simulation__simulation-information-bottom-container--balance">
 										<p className="euromillions-simulation__simulation-information-bottom-title">Balance</p>
-										<p className="euromillions-simulation__simulation-information-bottom-data">£{(lottoSimulationHistory.won - lottoSimulationHistory.spent).toFixed(2)}</p>
+										<p className="euromillions-simulation__simulation-information-bottom-data">£{(euromillionsSimulationHistory.won - euromillionsSimulationHistory.spent).toFixed(2)}</p>
 									</div>
 								</div>
 							</div>

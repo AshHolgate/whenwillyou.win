@@ -7,9 +7,15 @@ export interface SimulationsReducerState {
 	lottoDraws: Draw[];
 	lottoKeyFacts: string[];
 	lottoSimulationHistory: SimulationHistory;
-	simulationStatus: SimulationStatus;
 	isLottoSimulationOpen: boolean;
 	areLottoChosenNumbersValid: boolean;
+	euromillionsNumbersChosen: (number | null)[];
+	euromillionsDraws: Draw[];
+	euromillionsKeyFacts: string[];
+	euromillionsSimulationHistory: SimulationHistory;
+	isEuromillionsSimulationOpen: boolean;
+	areEuromillionsChosenNumbersValid: boolean;
+	simulationStatus: SimulationStatus;
 }
 
 const initialState: SimulationsReducerState = {
@@ -30,9 +36,29 @@ const initialState: SimulationsReducerState = {
 	],
 	lottoKeyFacts: [],
 	lottoSimulationHistory: { draws: 0, currentDrawDate: new Date(), day: 0, month: 0, year: 0, dayCycleCount: 3, spent: 0, won: 0 },
-	simulationStatus: SimulationStatus.notSimulating,
 	isLottoSimulationOpen: false,
-	areLottoChosenNumbersValid: false
+	areLottoChosenNumbersValid: false,
+	euromillionsNumbersChosen: [
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+	],
+	euromillionsDraws: [
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null },
+		{ drawNumber: null, numbersDrawn: [], winnings: null }
+	],
+	euromillionsKeyFacts: [],
+	euromillionsSimulationHistory: { draws: 0, currentDrawDate: new Date(), day: 0, month: 0, year: 0, dayCycleCount: 3, spent: 0, won: 0 },
+	isEuromillionsSimulationOpen: false,
+	areEuromillionsChosenNumbersValid: false,
+	simulationStatus: SimulationStatus.notSimulating
 };
 
 const calculateHistory = (draws: Draw[], history: SimulationHistory) => {

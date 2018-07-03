@@ -2,7 +2,8 @@
 
 .routes {
 	width: 100%;
-	background: #f4f4f4;
+	background: #f8f8f9;
 	flex-grow: 1;
 	font-family: $MainFont;
+	user-select: none;
 }
