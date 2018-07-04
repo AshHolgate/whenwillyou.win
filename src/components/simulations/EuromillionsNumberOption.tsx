@@ -4,6 +4,7 @@ require("./EuromillionsNumberOption.scss");
 export interface EuromillionsNumberOptionDataProps {
 	value: number | null;
 	index: number;
+	isLuckyStar: boolean;
 	disabled: boolean;
 }
 
@@ -22,7 +23,7 @@ export default class EuromillionsNumberOption extends React.Component<Euromillio
 		e.stopPropagation();
 	}
 
-	handleNumericChange(value: string|null) {
+	handleNumericChange(value: string | null) {
 		if (value === "") value = null;
 		let parsedValue = parseInt(value!, 0);
 		if (parsedValue === NaN) return;
@@ -31,11 +32,16 @@ export default class EuromillionsNumberOption extends React.Component<Euromillio
 	}
 
 	render() {
-		let { value, disabled } = this.props;
+		let { value, disabled, isLuckyStar } = this.props;
 
 		return (
-			<input className={`euromillions-number-option ${value ? "euromillions-number-option--filled" : ""}`} onClick={(e) => this.handleClick(e)} value={value || ""}
-				onChange={e => this.handleNumericChange(e.target.value)} type="string" pattern="pattern='[0-9]'" disabled={disabled}/>
+			<div className="euromillions-number-option">
+				{isLuckyStar &&
+					<div className="euromillions-number-option__lucky-star" />
+				}
+				<input className={`euromillions-number-option__input ${value ? "euromillions-number-option__input--filled" : ""}`} onClick={(e) => this.handleClick(e)} value={value || ""}
+					onChange={e => this.handleNumericChange(e.target.value)} type="string" pattern="pattern='[0-9]'" disabled={disabled} />
+			</div>
 		);
 	}
 }

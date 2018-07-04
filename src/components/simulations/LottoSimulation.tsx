@@ -168,9 +168,6 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 	}
 
 	calculateWinnings(matches: number) {
-		if (matches <= 1) {
-			return null;
-		}
 		if (matches === 2) {
 			return 2.5;
 		}
@@ -189,7 +186,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		if (matches === 6) {
 			return 5057464;
 		}
-		return 0;
+		return null;
 	}
 
 	handleSelectedNumberChange(value: number | null, index: number) {
@@ -264,25 +261,25 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 							</div>
 							<div className="lotto-simulation__winnings-container">
 								<p className="lotto-simulation__winnings-container-title">
-									Prizes
+									Matches
 						</p>
 								<p className="lotto-simulation__winnings-container-content">
-									6 - £5,057,464.00
+									6 = £5,057,464.00
 						</p>
 								<p className="lotto-simulation__winnings-container-content">
-									5 + Bonus - £35,942.00
+									5+B = £35,942.00
 						</p>
 								<p className="lotto-simulation__winnings-container-content">
-									5 - £1,455.00
+									5 = £1,455.00
 						</p>
 								<p className="lotto-simulation__winnings-container-content">
-									4 - £140.00
+									4 = £140.00
 						</p>
 								<p className="lotto-simulation__winnings-container-content">
-									3 - £25.00
+									3 = £25.00
 						</p>
 								<p className="lotto-simulation__winnings-container-content">
-									2 - £2.50
+									2 = £2.50
 						</p>
 							</div>
 						</div>

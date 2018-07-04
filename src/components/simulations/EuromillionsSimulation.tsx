@@ -41,8 +41,7 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 	}
 
 	areChosenNumbersValid(chosenNumbers: (number | null)[]) {
-		let areChosenNumbersValid = true;
-		areChosenNumbersValid = this.checkIfArrayIsUnique(chosenNumbers);
+		let areChosenNumbersValid = this.checkIfArrayIsUnique(chosenNumbers);
 		if (chosenNumbers.indexOf(null) >= 0) {
 			areChosenNumbersValid = false;
 		}
@@ -50,9 +49,15 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 	}
 
 	checkIfArrayIsUnique(numbers: (number | null)[]) {
-		let chosenNumbers = numbers;
-		for (let i = 0; i < chosenNumbers.length; i++) {
-			if (chosenNumbers.indexOf(chosenNumbers[i]) !== chosenNumbers.lastIndexOf(chosenNumbers[i])) {
+		let chosenMainNumbers = numbers.slice(0, 5);
+		let chosenStarNumbers = numbers.slice(5, 7);
+		for (let i = 0; i <= chosenMainNumbers.length; i++) {
+			if (chosenMainNumbers.indexOf(chosenMainNumbers[i]) !== chosenMainNumbers.lastIndexOf(chosenMainNumbers[i])) {
+				return false;
+			}
+		}
+		for (let i = 0; i <= chosenStarNumbers.length; i++) {
+			if (chosenStarNumbers.indexOf(chosenStarNumbers[i]) !== chosenStarNumbers.lastIndexOf(chosenStarNumbers[i])) {
 				return false;
 			}
 		}
@@ -104,7 +109,7 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 	handleClearClick(e: React.MouseEvent<HTMLElement>) {
 		if (!this.props.isOpen) return;
 		e.stopPropagation();
-		let newNumbers: (number | null)[] = [null, null, null, null, null, null];
+		let newNumbers: (number | null)[] = [null, null, null, null, null, null, null];
 		this.updateChosenNumbers(newNumbers);
 	}
 
@@ -117,9 +122,9 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 			});
 		}, 500);
 
-		this.props.updateSimulationStatus(1);
-		let sortedNumbers = this.props.euromillionsNumbersChosen.sort(function (a: number, b: number) { return a - b; });
-		this.updateChosenNumbers(sortedNumbers);
+		this.props.updateSimulationStatus(2);
+		let numbersChosen = this.props.euromillionsNumbersChosen;
+		this.updateChosenNumbers(numbersChosen);
 	}
 
 	handleEndSimulationClick(e: React.MouseEvent<HTMLElement>) {
@@ -153,42 +158,64 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 
 	calculateMatches(simulation: number[]) {
 		let numberOfMatches = 0;
-		for (let i = 0; i < 6; i++) {
-			if (this.props.euromillionsNumbersChosen.indexOf(simulation[i]) >= 0) {
+		let chosenMainNumbers = this.props.euromillionsNumbersChosen.slice(0, 5);
+		let chosenStarNumbers = this.props.euromillionsNumbersChosen.slice(5, 7);
+		let simulationMainNumbers = simulation.slice(0, 5);
+		let simulationStarNumbers = simulation.slice(5, 7);
+		for (let i = 0; i <= chosenMainNumbers.length; i++) {
+			if (chosenMainNumbers.indexOf(simulationMainNumbers[i]) >= 0) {
 				numberOfMatches++;
 			}
 		}
-		if (numberOfMatches === 5) {
-			if (this.props.euromillionsNumbersChosen.indexOf(simulation[6]) >= 0) {
-				numberOfMatches = 5.1;
+		for (let i = 0; i <= simulationStarNumbers.length; i++) {
+			if (chosenStarNumbers.indexOf(simulationStarNumbers[i]) >= 0) {
+				numberOfMatches += 0.1;
 			}
 		}
 		return numberOfMatches;
 	}
 
 	calculateWinnings(matches: number) {
-		if (matches <= 1) {
-			return null;
+		if (matches === 1.2) {
+			return 6.59;
 		}
 		if (matches === 2) {
-			return 2.5;
+			return 2.73;
+		}
+		if (matches === 2.1) {
+			return 5.04;
+		}
+		if (matches === 2.2) {
+			return 12.29;
 		}
 		if (matches === 3) {
-			return 25;
+			return 7.62;
+		}
+		if (matches === 3.1) {
+			return 9.10;
+		}
+		if (matches === 3.2) {
+			return 68.54;
 		}
 		if (matches === 4) {
-			return 140;
+			return 37.33;
+		}
+		if (matches === 4.1) {
+			return 106.35;
+		}
+		if (matches === 4.2) {
+			return 2169.20;
 		}
 		if (matches === 5) {
-			return 1455;
+			return 37772.30;
 		}
 		if (matches === 5.1) {
-			return 35942;
+			return 232448.96;
 		}
-		if (matches === 6) {
-			return 5057464;
+		if (matches === 5.2) {
+			return 49645209.77;
 		}
-		return 0;
+		return null;
 	}
 
 	handleSelectedNumberChange(value: number | null, index: number) {
@@ -215,7 +242,7 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 		window.requestAnimationFrame(() => {
 			if (this.state.shouldAutoSimulate) this.draw();
 		});
-		
+
 	}
 
 	render() {
@@ -241,7 +268,7 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 				<div className={`euromillions-simulation__simulation-numbers-container ${isOpen ? "euromillions-simulation__simulation-numbers-container--open" : ""}`}>
 					<div className={`euromillions-simulation__numbers-container`}>
 						{euromillionsNumbersChosen.map((key, index) => {
-							return <EuromillionsNumberOption key={index} value={euromillionsNumbersChosen[index]} index={index}
+							return <EuromillionsNumberOption key={index} value={euromillionsNumbersChosen[index]} index={index} isLuckyStar={index >= 5}
 								onChange={(value, index) => this.handleSelectedNumberChange(value, index)} disabled={isSimulating} />;
 						})}
 
@@ -254,36 +281,57 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 							<div className="euromillions-simulation__description-container">
 								<p className="euromillions-simulation__description-container-title">
 									Description
-						</p>
+								</p>
 								<p className="euromillions-simulation__description-container-content">
 									The National Lottery is the state-franchised national lottery in the United Kingdom.
-						</p>
+								</p>
 								<p className="euromillions-simulation__description-container-content">
 									The chance of winning the jackpot is 1 in 45,057,474, the chance of winning any prize is 1 in 54.
-						</p>
+								</p>
 							</div>
 							<div className="euromillions-simulation__winnings-container">
 								<p className="euromillions-simulation__winnings-container-title">
-									Prizes
-						</p>
+									Matches
+								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									6 - £5,057,464.00
-						</p>
+									5+2★ = £40,817,144.76
+								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									5 + Bonus - £35,942.00
-						</p>
+									5+1★ = £307,178.68
+								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									5 - £1,455.00
-						</p>
+									5 = £52,639.75
+								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									4 - £140.00
-						</p>
+									4+2★ = £3097.01
+								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									3 - £25.00
-						</p>
+									4+1★ = £140.71
+								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									2 - £2.50
-						</p>
+									4 = £66.01
+								</p>
+								<p className="euromillions-simulation__winnings-container-content">
+									3+2★ = £50.85
+								</p>
+								<p className="euromillions-simulation__winnings-container-content">
+									2+2★ = £13.84
+								</p>
+								<p className="euromillions-simulation__winnings-container-content">
+									3+1★ = £10.15
+								</p>
+								<p className="euromillions-simulation__winnings-container-content">
+									3 = £8.44
+								</p>
+								<p className="euromillions-simulation__winnings-container-content">
+									1+2★ = £7.40
+								</p>
+								<p className="euromillions-simulation__winnings-container-content">
+									2+1★ = £5.57
+								</p>
+								<p className="euromillions-simulation__winnings-container-content">
+									2 = £2.50
+								</p>
 							</div>
 						</div>
 						<div className={`euromillions-simulation__start-simulation-button ${chosenNumbersValid ? "euromillions-simulation__start-simulation-button--open" : ""}`}
@@ -308,7 +356,7 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 												let match = false;
 												if (euromillionsNumbersChosen.indexOf(drawnNumber) >= 0) match = true;
 												return <p key={index} className={`euromillions-simulation__drawn-number ${match ? "euromillions-simulation__drawn-number--match" : ""}
-													${index === 6 ? "euromillions-simulation__drawn-number--bonus" : ""}`}>{drawnNumber}</p>;
+													${index === 5 ? "euromillions-simulation__drawn-number--bonus" : ""}`}>{drawnNumber}</p>;
 											})}
 										</div>
 										<p className="euromillions-simulation__draw-winnings euromillions-simulation__draw-winnings">{draw.winnings ? "£" + draw.winnings.toFixed(2) : ""}</p>

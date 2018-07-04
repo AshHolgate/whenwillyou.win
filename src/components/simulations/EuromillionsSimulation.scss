@@ -21,13 +21,13 @@
 	}
 	&--open {
 		background: $EuromillionsYellow;
-		height: 310px;
+		height: 435px;
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 		@media (min-width: $iPhone8) {
-			height: 320px;
+			height: 445px;
 		}
 		@media (min-width: $Tablet) {
-			height: 330px;
+			height: 486px;
 		}
 	}
 	&--simulating {
@@ -119,9 +119,12 @@
 	&__main-container {
 		position: relative;
 		width: calc(100% - 20px);
-		min-height: 210px;
+		min-height: 335px;
 		transition: 0.5s;
 		opacity: 0;
+		@media (min-width: $Tablet) {
+			min-height: 365px;
+		}
 		&--open {
 			opacity: 1;
 		}
