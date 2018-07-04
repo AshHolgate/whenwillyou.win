@@ -294,43 +294,43 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 									Matches
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									5+2★ = £40,817,144.76
+									5+2★ = £49,645,209.77
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									5+1★ = £307,178.68
+									5+1★ = £232,448.96
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									5 = £52,639.75
+									5 = £37,702.30
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									4+2★ = £3097.01
+									4+2★ = £2169.20
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									4+1★ = £140.71
+									4+1★ = £106.35
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									4 = £66.01
+									3+2★ = £68.54
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									3+2★ = £50.85
+									4 = £37.33
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									2+2★ = £13.84
+									2+2★ = £12.29
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									3+1★ = £10.15
+									3+1★ = £9.10
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									3 = £8.44
+									3 = £7.62
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									1+2★ = £7.40
+									1+2★ = £6.59
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									2+1★ = £5.57
+									2+1★ = £5.04
 								</p>
 								<p className="euromillions-simulation__winnings-container-content">
-									2 = £2.50
+									2 = £2.73
 								</p>
 							</div>
 						</div>
@@ -349,14 +349,24 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 									<p className="euromillions-simulation__draw-winnings euromillions-simulation__draw-winnings--title">Winnings</p>
 								</div>
 								{euromillionsDraws.map((draw, index) => {
+									let mainNumbersDrawn = draw.numbersDrawn.slice(0, 5);
+									let starNumbersDrawn = draw.numbersDrawn.slice(5, 7);
+									let mainNumbersChosen = this.props.euromillionsNumbersChosen.slice(0, 5);
+									let starNumbersChosen = this.props.euromillionsNumbersChosen.slice(5, 7);
 									return <div key={index} className="euromillions-simulation__draw-row">
 										<p className="euromillions-simulation__draw-id euromillions-simulation__draw-id">{draw.drawNumber}</p>
 										<div className="euromillions-simulation__drawn-numbers-container">
-											{draw.numbersDrawn.map((drawnNumber, index) => {
+											{mainNumbersDrawn.map((drawnNumber, i) => {
 												let match = false;
-												if (euromillionsNumbersChosen.indexOf(drawnNumber) >= 0) match = true;
-												return <p key={index} className={`euromillions-simulation__drawn-number ${match ? "euromillions-simulation__drawn-number--match" : ""}
-													${index === 5 ? "euromillions-simulation__drawn-number--bonus" : ""}`}>{drawnNumber}</p>;
+												if (mainNumbersChosen.indexOf(drawnNumber) >= 0) match = true;
+												return <p key={i} className={`euromillions-simulation__drawn-number ${match ? "euromillions-simulation__drawn-number--match" : ""}
+													${i === 4 ? "euromillions-simulation__drawn-number--end" : ""}`}>{drawnNumber}</p>;
+											})}
+											{starNumbersDrawn.map((drawnNumber, i) => {
+												let match = false;
+												if (starNumbersChosen.indexOf(drawnNumber) >= 0) match = true;
+												return <p key={i} className={`euromillions-simulation__drawn-number
+													${match ? "euromillions-simulation__drawn-number--match" : ""}`}>{drawnNumber}</p>;
 											})}
 										</div>
 										<p className="euromillions-simulation__draw-winnings euromillions-simulation__draw-winnings">{draw.winnings ? "£" + draw.winnings.toFixed(2) : ""}</p>

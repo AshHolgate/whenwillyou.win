@@ -305,8 +305,8 @@
 			text-decoration: underline;
 			opacity: 1 !important;
 		}
-		&--bonus {
-			margin-left: 5px;
+		&--end {
+			margin-right: 10px;
 		}
 		@media (min-width: $iPhone8) {
 			width: 15px;
@@ -352,15 +352,15 @@
 		}
 		&--day {
 			border-top-right-radius: 6px;
-			background: #B40000;
+			background: darken($EuromillionsYellow, 20%);
 		}
 		&--month {
 			border-top-left-radius: 6px;
-			background: #B40000;
+			background: darken($EuromillionsYellow, 20%);
 		}
 		&--year {
 			border-top-left-radius: 6px;
-			background: #B40000;
+			background: darken($EuromillionsYellow, 20%);
 		}
 	}
 	&__simulation-information-top-data-container {
@@ -436,7 +436,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background: #CBC000;
+		background: darken($EuromillionsYellow, 20%);
 		color: white;
 		opacity: 1;
 		cursor: pointer;
@@ -452,7 +452,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background: #CBC000;
+		background: darken($EuromillionsYellow, 20%);
 		color: white;
 		opacity: 0.4;
 		width: calc(100% + 10px);
@@ -471,7 +471,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background: #CBC000;
+		background: darken($EuromillionsYellow, 20%);
 		color: white;
 		opacity: 1;
 		cursor: pointer;

@@ -27,7 +27,8 @@ export default class EuromillionsNumberOption extends React.Component<Euromillio
 		if (value === "") value = null;
 		let parsedValue = parseInt(value!, 0);
 		if (parsedValue === NaN) return;
-		if (parsedValue > 60) return;
+		if (!this.props.isLuckyStar && parsedValue > 50) return;
+		if (this.props.isLuckyStar && parsedValue > 12) return;
 		this.props.onChange(parsedValue, this.props.index);
 	}
 
