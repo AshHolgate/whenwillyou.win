@@ -19,6 +19,9 @@
 		color: white;
 		
 	}
+	&[disabled] {
+		opacity: 1 !important;
+	}
 	@media (min-width: $iPhone8) {
 		width: 40px;
 		height: 40px;

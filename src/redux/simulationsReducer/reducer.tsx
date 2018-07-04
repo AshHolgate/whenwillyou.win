@@ -84,10 +84,10 @@ const calculateHistory = (draws: Draw[], history: SimulationHistory) => {
 };
 
 const reducer = reducerWithInitialState(initialState)
-	.case(onLottoOpenAction, (state, payload) => ({ ...state, isLottoSimulationOpen: payload.value }))
+	.case(onLottoOpenAction, (state, payload) => ({ ...state, isLottoSimulationOpen: payload.value, isEuromillionsSimulationOpen: false }))
 	.case(changeLottoSelectedNumberAction, (state, payload) => ({ ...state, lottoNumbersChosen: payload.value, areLottoChosenNumbersValid: payload.areNumbersValid }))
 	.case(onUpdateLottoDrawsAction, (state, payload) => ({ ...state, lottoDraws: payload.draws, lottoSimulationHistory: calculateHistory(payload.draws, state.lottoSimulationHistory)}))
-	.case(onEuromillionsOpenAction, (state, payload) => ({ ...state, isEuromillionsSimulationOpen: payload.value }))
+	.case(onEuromillionsOpenAction, (state, payload) => ({ ...state, isEuromillionsSimulationOpen: payload.value, isLottoSimulationOpen: false }))
 	.case(changeEuromillionsSelectedNumberAction, (state, payload) => ({ ...state, euromillionsNumbersChosen: payload.value, areEuromillionsChosenNumbersValid: payload.areNumbersValid }))
 	.case(onUpdateEuromillionsDrawsAction, (state, payload) => ({ ...state, euromillionsDraws: payload.draws,
 		euromillionsSimulationHistory: calculateHistory(payload.draws, state.euromillionsSimulationHistory)}))
