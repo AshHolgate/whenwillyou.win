@@ -213,7 +213,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 		window.requestAnimationFrame(() => {
 			if (this.state.shouldAutoSimulate) this.draw();
 		});
-		
+
 	}
 
 	render() {
@@ -256,7 +256,7 @@ export default class LottoSimulation extends React.Component<LottoSimulationProp
 									The National Lottery is the state-franchised national lottery in the United Kingdom.
 						</p>
 								<p className="lotto-simulation__description-container-content">
-									The chance of winning the jackpot is 1 in 45,057,474, the chance of winning any prize is 1 in 54.
+									Choose 6 numbers between 1 - 60 to begin playing.
 						</p>
 							</div>
 							<div className="lotto-simulation__winnings-container">

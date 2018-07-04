@@ -283,10 +283,10 @@ export default class EuromillionsSimulation extends React.Component<Euromillions
 									Description
 								</p>
 								<p className="euromillions-simulation__description-container-content">
-									The National Lottery is the state-franchised national lottery in the United Kingdom.
+									EuroMillions is a transnational lottery requiring 7 correct numbers to win the jackpot.
 								</p>
 								<p className="euromillions-simulation__description-container-content">
-									The chance of winning the jackpot is 1 in 45,057,474, the chance of winning any prize is 1 in 54.
+									Choose 5 numbers between 1-50, and 2 "Lucky Stars" between 1-12, to begin playing.
 								</p>
 							</div>
 							<div className="euromillions-simulation__winnings-container">
