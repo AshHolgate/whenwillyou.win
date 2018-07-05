@@ -3,6 +3,7 @@ import Divider from "../shared/Divider";
 import LottoSimulation from "./LottoSimulation";
 import { Draw, SimulationHistory, SimulationStatus } from "../../models/Simulation";
 import EuromillionsSimulation from "./EuromillionsSimulation";
+import { initGA, logPageView } from "../../ReactGA";
 require("./Simulations.scss");
 
 export interface SimulationsStoreProps {
@@ -34,6 +35,11 @@ export interface SimulationsDispatchProps {
 export type SimulationsProps = SimulationsStoreProps & SimulationsDispatchProps;
 
 export default class Simulations extends React.Component<SimulationsProps> {
+	componentDidMount() {
+		initGA();
+		logPageView();
+	}
+	
 	render() {
 		let { lottoNumbersChosen, lottoDraws, lottoKeyFacts, lottoSimulationHistory, onLottoSelectedNumbersChange, onUpdateLottoDraws,
 			isLottoSimulationOpen, areLottoChosenNumbersValid, handleLottoOpenClick, euromillionsNumbersChosen, euromillionsDraws,
